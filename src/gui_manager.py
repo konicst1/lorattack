@@ -1,5 +1,6 @@
 from __future__ import annotations
 import threading
+from src.sniffer import Sniffer
 
 import urwid
 
@@ -123,6 +124,7 @@ class HorizontalBoxes(urwid.Columns):
 
 class GUIManager:
     def __init__(self):
+        self.sniffer = Sniffer()
         menu_top = SubMenu('LoRaWAN Tester', [
             SubMenu('Session', [
                 SubMenu('New Session', [
@@ -133,7 +135,7 @@ class GUIManager:
             ]),
             SubMenu('Sniffer', [
                 SubMenu('Live sniffing', [
-
+                    Choice('Sniff...', action=self.sniff)
                 ]),
                 SubMenu('Session Sniffing', [
                     SubMenu('kr00ker', [
@@ -158,4 +160,11 @@ class GUIManager:
     def run(self):
 
         loop.run()
+
+    def sniff(self):
+        global loop
+
+        loop.screen.stop()
+        self.sniffer.sniff_traffic()
+        loop.screen.start()
 

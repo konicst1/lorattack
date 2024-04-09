@@ -1,5 +1,4 @@
 from scapy.all import rdpcap, hexdump
-from scapy.utils import PcapReader
 
 from layer.lorawan_phy import LoRa
 from scapy.layers.inet import *
