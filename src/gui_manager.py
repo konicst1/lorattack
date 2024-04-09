@@ -4,7 +4,6 @@ from src.sniffer import Sniffer
 
 import urwid
 
-
 loop = None
 top = None
 
@@ -59,7 +58,7 @@ def start_scanning(ifc, button=None):
     global loop
 
     loop.screen.stop()
-    #airmon_scan.run_airodump(ifc)
+    # airmon_scan.run_airodump(ifc)
     loop.screen.start()
 
 
@@ -83,17 +82,16 @@ def run_frag(button=None):
     global loop
 
     loop.screen.stop()
-    #frag_attack.run_frag()
+    # frag_attack.run_frag()
     loop.screen.start()
+
 
 def store_frag_cfg(ifc, param, button=None):
     global loop
 
     loop.screen.stop()
-    #frag_attack.store_cfg(param, ifc)
+    # frag_attack.store_cfg(param, ifc)
     loop.screen.start()
-
-
 
 
 palette = [
@@ -122,13 +120,32 @@ class HorizontalBoxes(urwid.Columns):
                               self.options('given', 32)))
         self.focus_position = len(self.contents) - 1
 
+
+class EnterReactEdit(urwid.Edit):
+    def __init__(self, *args, **kwargs):
+        self.on_enter = kwargs.pop('on_enter', None)  # Extract the on_enter callback if provided
+        super().__init__(*args, **kwargs)
+
+    def keypress(self, size, key):
+        if key == 'enter':
+            if self.on_enter:  # Check if the on_enter callback is provided and callable
+                self.on_enter(self.get_edit_text())
+            else:
+                # Default behavior for 'enter' can be customized here if needed
+                pass
+        else:
+            return super().keypress(size, key)
+
+
 class GUIManager:
     def __init__(self):
         self.sniffer = Sniffer()
+        self.edit = EnterReactEdit("Enter something: ", on_enter=self.on_change)
+
         menu_top = SubMenu('LoRaWAN Tester', [
             SubMenu('Session', [
                 SubMenu('New Session', [
-
+                    self.edit
                 ]),
                 SubMenu('Choose Session', [
                 ]),
@@ -158,7 +175,6 @@ class GUIManager:
                                            ), palette)
 
     def run(self):
-
         loop.run()
 
     def sniff(self):
@@ -167,4 +183,7 @@ class GUIManager:
         loop.screen.stop()
         self.sniffer.sniff_traffic()
         loop.screen.start()
+
+    def on_change(self, text):
+        print("Current Text:", text)
 
