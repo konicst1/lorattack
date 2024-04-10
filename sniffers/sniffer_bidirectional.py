@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: GPL-3.0
 #
 # GNU Radio Python Flow Graph
-# Title: Not titled yet
+# Title: LoRaWAN Sniffer
 # GNU Radio version: 3.10.1.1
 
 from packaging.version import Version as StrictVersion
@@ -43,10 +43,10 @@ from gnuradio import qtgui
 
 class test(gr.top_block, Qt.QWidget):
 
-    def __init__(self):
-        gr.top_block.__init__(self, "Not titled yet", catch_exceptions=True)
+    def __init__(self, bandwidth=125000, frequency=867.6e6, samp_rate=1000000, spreading_factor=7):
+        gr.top_block.__init__(self, "LoRaWAN Sniffer", catch_exceptions=True)
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("Not titled yet")
+        self.setWindowTitle("LoRaWAN Sniffer")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -75,13 +75,17 @@ class test(gr.top_block, Qt.QWidget):
             pass
 
         ##################################################
+        # Parameters
+        ##################################################
+        self.bandwidth = bandwidth
+        self.frequency = frequency
+        self.samp_rate = samp_rate
+        self.spreading_factor = spreading_factor
+
+        ##################################################
         # Variables
         ##################################################
-        self.frequency = frequency = 867.6e6
-        self.bandwidth = bandwidth = 125000
         self.squelch_treshold = squelch_treshold = -60
-        self.spreading_factor = spreading_factor = 7
-        self.samp_rate = samp_rate = 1000000
         self.rpp0_channelization_disable = rpp0_channelization_disable = False
         self.low_pass_trans_width = low_pass_trans_width = bandwidth*0.5
         self.low_pass_cutoff = low_pass_cutoff = bandwidth*0.9
@@ -229,6 +233,14 @@ class test(gr.top_block, Qt.QWidget):
 
         event.accept()
 
+    def get_bandwidth(self):
+        return self.bandwidth
+
+    def set_bandwidth(self, bandwidth):
+        self.bandwidth = bandwidth
+        self.set_low_pass_cutoff(self.bandwidth*0.9)
+        self.set_low_pass_trans_width(self.bandwidth*0.5)
+
     def get_frequency(self):
         return self.frequency
 
@@ -260,19 +272,24 @@ class test(gr.top_block, Qt.QWidget):
         self.qtgui_sink_x_0_0_0.set_frequency_range(self.frequency, self.samp_rate)
         self.uhd_usrp_source_0.set_center_freq(self.frequency, 0)
 
-    def get_bandwidth(self):
-        return self.bandwidth
+    def get_samp_rate(self):
+        return self.samp_rate
 
-    def set_bandwidth(self, bandwidth):
-        self.bandwidth = bandwidth
-        self.set_low_pass_cutoff(self.bandwidth*0.9)
-        self.set_low_pass_trans_width(self.bandwidth*0.5)
-
-    def get_squelch_treshold(self):
-        return self.squelch_treshold
-
-    def set_squelch_treshold(self, squelch_treshold):
-        self.squelch_treshold = squelch_treshold
+    def set_samp_rate(self, samp_rate):
+        self.samp_rate = samp_rate
+        self.blocks_freqshift_cc_0.set_phase_inc(2.0*math.pi*+900e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_0.set_phase_inc(2.0*math.pi*+700e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_0_0.set_phase_inc(2.0*math.pi*+500e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_0_0_0.set_phase_inc(2.0*math.pi*+300e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_0_0_0_0.set_phase_inc(2.0*math.pi*0/self.samp_rate)
+        self.blocks_freqshift_cc_0_0_0_0_1.set_phase_inc(2.0*math.pi*+100e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_0_0_0_1_0.set_phase_inc(2.0*math.pi*-100e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_0_0_0_2.set_phase_inc(2.0*math.pi*-300e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_0_0_1.set_phase_inc(2.0*math.pi*-500e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_0_1.set_phase_inc(2.0*math.pi*-700e3/self.samp_rate)
+        self.blocks_freqshift_cc_0_1.set_phase_inc(2.0*math.pi*-900e3/self.samp_rate)
+        self.qtgui_sink_x_0_0_0.set_frequency_range(self.frequency, self.samp_rate)
+        self.uhd_usrp_source_0.set_samp_rate(self.samp_rate)
 
     def get_spreading_factor(self):
         return self.spreading_factor
@@ -302,24 +319,11 @@ class test(gr.top_block, Qt.QWidget):
         self.lora_lora_receiver_0_0_4_1_8.set_sf(self.spreading_factor)
         self.lora_lora_receiver_0_0_4_1_9.set_sf(self.spreading_factor)
 
-    def get_samp_rate(self):
-        return self.samp_rate
+    def get_squelch_treshold(self):
+        return self.squelch_treshold
 
-    def set_samp_rate(self, samp_rate):
-        self.samp_rate = samp_rate
-        self.blocks_freqshift_cc_0.set_phase_inc(2.0*math.pi*+900e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_0.set_phase_inc(2.0*math.pi*+700e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_0_0.set_phase_inc(2.0*math.pi*+500e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_0_0_0.set_phase_inc(2.0*math.pi*+300e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_0_0_0_0.set_phase_inc(2.0*math.pi*0/self.samp_rate)
-        self.blocks_freqshift_cc_0_0_0_0_1.set_phase_inc(2.0*math.pi*+100e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_0_0_0_1_0.set_phase_inc(2.0*math.pi*-100e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_0_0_0_2.set_phase_inc(2.0*math.pi*-300e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_0_0_1.set_phase_inc(2.0*math.pi*-500e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_0_1.set_phase_inc(2.0*math.pi*-700e3/self.samp_rate)
-        self.blocks_freqshift_cc_0_1.set_phase_inc(2.0*math.pi*-900e3/self.samp_rate)
-        self.qtgui_sink_x_0_0_0.set_frequency_range(self.frequency, self.samp_rate)
-        self.uhd_usrp_source_0.set_samp_rate(self.samp_rate)
+    def set_squelch_treshold(self, squelch_treshold):
+        self.squelch_treshold = squelch_treshold
 
     def get_rpp0_channelization_disable(self):
         return self.rpp0_channelization_disable
@@ -353,15 +357,33 @@ class test(gr.top_block, Qt.QWidget):
 
 
 
+def argument_parser():
+    parser = ArgumentParser()
+    parser.add_argument(
+        "--bandwidth", dest="bandwidth", type=intx, default=125000,
+        help="Set bandwidth [default=%(default)r]")
+    parser.add_argument(
+        "--frequency", dest="frequency", type=eng_float, default=eng_notation.num_to_str(float(867.6e6)),
+        help="Set frequency [default=%(default)r]")
+    parser.add_argument(
+        "--samp-rate", dest="samp_rate", type=intx, default=1000000,
+        help="Set samp_rate [default=%(default)r]")
+    parser.add_argument(
+        "--spreading-factor", dest="spreading_factor", type=intx, default=7,
+        help="Set spreading_factor [default=%(default)r]")
+    return parser
+
 
 def main(top_block_cls=test, options=None):
+    if options is None:
+        options = argument_parser().parse_args()
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
         style = gr.prefs().get_string('qtgui', 'style', 'raster')
         Qt.QApplication.setGraphicsSystem(style)
     qapp = Qt.QApplication(sys.argv)
 
-    tb = top_block_cls()
+    tb = top_block_cls(bandwidth=options.bandwidth, frequency=options.frequency, samp_rate=options.samp_rate, spreading_factor=options.spreading_factor)
 
     tb.start()
 

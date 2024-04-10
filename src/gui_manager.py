@@ -1,7 +1,7 @@
 from __future__ import annotations
 import threading
 from src.sniffer import Sniffer
-
+from src.session_manager import SessionManager
 import urwid
 
 loop = None
@@ -140,6 +140,7 @@ class EnterReactEdit(urwid.Edit):
 class GUIManager:
     def __init__(self):
         self.sniffer = Sniffer()
+        self.session_manager = SessionManager()
         self.edit = EnterReactEdit("Enter something: ", on_enter=self.on_change)
 
         menu_top = SubMenu('LoRaWAN Tester', [
@@ -148,13 +149,13 @@ class GUIManager:
                     self.edit
                 ]),
                 SubMenu('Choose Session', [
+                    Choice(name, action=self.activate_session, text=name) for name in
+                    self.session_manager.list_sessions()
                 ]),
             ]),
             SubMenu('Sniffer', [
-                SubMenu('Live sniffing', [
-                    Choice('Sniff...', action=self.sniff)
-                ]),
-                SubMenu('Session Sniffing', [
+                Choice('Sniff', action=self.sniff),
+                SubMenu('Configure', [
                     SubMenu('kr00ker', [
                     ]),
                     SubMenu('r00kie-kr00kie', [
@@ -162,7 +163,7 @@ class GUIManager:
                 ]),
 
             ]),
-            SubMenu('Transmit', [
+            SubMenu('Analyzer', [
                 Choice('wifite2', action=run_wifi_security_attacks),
             ]),
             Choice('Exit'),
@@ -185,5 +186,8 @@ class GUIManager:
         loop.screen.start()
 
     def on_change(self, text):
-        print("Current Text:", text)
+        self.session_manager.create_session(text)
+        self.edit.set_edit_text("Session created")
 
+    def activate_session(self, text):
+        self.session_manager.activate_session(text)

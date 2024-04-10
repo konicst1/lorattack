@@ -22,7 +22,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: Not titled yet
+    title: LoRaWAN Sniffer
     window_size: (1000,1000)
   states:
     bus_sink: false
@@ -42,9 +42,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [400, 12.0]
+    coordinate: [976, 172.0]
     rotation: 0
-    state: true
+    state: disabled
 - name: channels
   id: variable
   parameters:
@@ -66,7 +66,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [168, 172.0]
+    coordinate: [168, 164.0]
     rotation: 0
     state: true
 - name: frequency
@@ -78,9 +78,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [312, 12.0]
+    coordinate: [888, 180.0]
     rotation: 0
-    state: true
+    state: disabled
 - name: low_pass_cutoff
   id: variable
   parameters:
@@ -90,7 +90,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 220.0]
+    coordinate: [32, 428.0]
     rotation: 0
     state: true
 - name: low_pass_trans_width
@@ -102,7 +102,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [352, 220.0]
+    coordinate: [32, 364.0]
     rotation: 0
     state: true
 - name: rpp0_channelization_disable
@@ -128,9 +128,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 20.0]
+    coordinate: [1056, 180.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: spreading_factor
   id: variable
   parameters:
@@ -140,9 +140,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [352, 124.0]
+    coordinate: [784, 188.0]
     rotation: 0
-    state: true
+    state: disabled
 - name: squelch_treshold
   id: variable
   parameters:
@@ -152,7 +152,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [176, 268.0]
+    coordinate: [32, 300.0]
     rotation: 0
     state: true
 - name: analog_simple_squelch_cc_0_0
@@ -342,6 +342,23 @@ blocks:
     coordinate: [1552, 1972.0]
     rotation: 0
     state: disabled
+- name: bandwidth
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: ''
+    short_id: ''
+    type: intx
+    value: '125000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 12.0]
+    rotation: 0
+    state: true
 - name: blocks_add_xx_0
   id: blocks_add_xx
   parameters:
@@ -547,6 +564,23 @@ blocks:
     coordinate: [936, 3564.0]
     rotation: 0
     state: enabled
+- name: frequency
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: ''
+    short_id: ''
+    type: eng_float
+    value: 867.6e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 100.0]
+    rotation: 0
+    state: true
 - name: lora_lora_receiver_0_0_0
   id: lora_lora_receiver
   parameters:
@@ -1803,35 +1837,6 @@ blocks:
     coordinate: [1048, 68.0]
     rotation: 0
     state: enabled
-- name: qtgui_sink_x_0_0
-  id: qtgui_sink_x
-  parameters:
-    affinity: ''
-    alias: ''
-    bw: samp_rate
-    comment: ''
-    fc: frequency
-    fftsize: '1024'
-    gui_hint: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    name: '""'
-    plotconst: 'True'
-    plotfreq: 'True'
-    plottime: 'True'
-    plotwaterfall: 'True'
-    rate: '10'
-    showports: 'False'
-    showrf: 'False'
-    type: complex
-    wintype: window.WIN_BLACKMAN_hARRIS
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [208, 332.0]
-    rotation: 0
-    state: disabled
 - name: qtgui_sink_x_0_0_0
   id: qtgui_sink_x
   parameters:
@@ -1861,6 +1866,40 @@ blocks:
     coordinate: [176, 580.0]
     rotation: 0
     state: enabled
+- name: samp_rate
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: ''
+    short_id: ''
+    type: intx
+    value: '1000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 12.0]
+    rotation: 0
+    state: true
+- name: spreading_factor
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: ''
+    short_id: ''
+    type: intx
+    value: '7'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [312, 100.0]
+    rotation: 0
+    state: true
 - name: uhd_usrp_source_0
   id: uhd_usrp_source
   parameters:
