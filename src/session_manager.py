@@ -70,7 +70,6 @@ class SessionManager:
         with open(os.path.join(session_dir, 'data.json'), 'r') as f:
             session_data_str = json.load(f)
 
-        # Convert strings back to ENUMs
         session_data = {SessionParams[k]: v for k, v in session_data_str.items()}
         return current_session_name, session_data
 

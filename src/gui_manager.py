@@ -152,14 +152,12 @@ class GUIManager:
                     Choice(name, action=self.activate_session, text=name) for name in
                     self.session_manager.list_sessions()
                 ]),
+
             ]),
             SubMenu('Sniffer', [
                 Choice('Sniff', action=self.sniff),
                 SubMenu('Configure', [
-                    SubMenu('kr00ker', [
-                    ]),
-                    SubMenu('r00kie-kr00kie', [
-                    ]),
+                    Choice('Edit config/sniffer.config', action=self.sniffer.configure_sniffer)
                 ]),
 
             ]),
@@ -182,7 +180,7 @@ class GUIManager:
         global loop
 
         loop.screen.stop()
-        self.sniffer.sniff_traffic()
+        self.sniffer.run_sniffer_thread()
         loop.screen.start()
 
     def on_change(self, text):
