@@ -2,7 +2,7 @@ import os
 import json
 from enum import Enum, auto
 from typing import Dict, Any
-
+from datetime import datetime
 
 class SessionParams(Enum):
     AppKey = auto()
@@ -22,28 +22,29 @@ class SessionManager:
         self.current_session_file = 'session/current_session'
         if not os.path.exists(self.sessions_dir):
             os.makedirs(self.sessions_dir)
-
+    def get_current_session_name(self):
+        name, data = self.load_current_session()
+        return name
     def create_session(self, session_name: str):
         session_data = {
-            SessionParams.AppKey: "Your_App_Key_Value",
+            SessionParams.AppKey: None,
             SessionParams.JoinRequest: {
-                "DevEUI": "Your_DevEUI_Value",
-                "AppEUI": "Your_AppEUI_Value",
-                "JoinEUI": "Your_JoinEUI_Value",
-                "DevNonce": "Your_DevNonce_Value"
+                "DevEUI": None,
+                "AppEUI": None,
+                "JoinEUI": None,
+                "DevNonce": None
             },
             SessionParams.JoinAccept: {
-                "AppNonce": "Your_AppNonce_Value",
-                "JoinNonce": "Your_JoinNonce_Value",
-                "NetID": "Your_NetID_Value",
-                "DevAddr": "Your_DevAddr_Value_in_JoinAccept"
+                "AppNonce": None,
+                "JoinNonce": None,
+                "NetID": None,
+                "DevAddr": None
             },
-            SessionParams.AppSKey: "Your_AppSKey_Value",
-            SessionParams.NwkSKey: "Your_NwkSKey_Value",
-            SessionParams.NwkSEncKey: "Your_NwkSEncKey_Value",
-            SessionParams.SNwkSIntKey: "Your_SNwkSIntKey_Value",
-            SessionParams.FNwkSIntKey: "Your_FNwkSIntKey_Value",
-            SessionParams.DevAddr: "Your_DevAddr_Value"
+            SessionParams.AppSKey: None,
+            SessionParams.NwkSKey: None,
+            SessionParams.NwkSEncKey: None,
+            SessionParams.SNwkSIntKey: None,
+            SessionParams.FNwkSIntKey: None
         }
         session_dir = os.path.join(self.sessions_dir, session_name)
         if not os.path.exists(session_dir):
@@ -95,6 +96,8 @@ class SessionManager:
 
     def list_sessions(self):
         return [d for d in os.listdir(self.sessions_dir) if os.path.isdir(os.path.join(self.sessions_dir, d))]
+
+
 
 if __name__ == "__main__":
     sm = SessionManager()

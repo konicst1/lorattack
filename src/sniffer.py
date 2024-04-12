@@ -4,6 +4,7 @@ import threading
 from src.command_handler import CommandHandler
 from src.analyzer import Analyzer
 
+
 class Sniffer(CommandHandler):
 
 
@@ -21,11 +22,16 @@ class Sniffer(CommandHandler):
 
 
     def run_sniffer_thread(self, direction='bidirectional'):
-        thread = threading.Thread(target=self.sniff_traffic)
-        thread.start()
+        sniffer_thread = threading.Thread(target=self.sniff_traffic)
+        sniffer_thread.start()
         analyzer = Analyzer()
-        analyzer.live_sniffing()
-        thread.join()
+        analyzer_thread = threading.Thread(target=analyzer.live_sniffing())
+        analyzer_thread.start()
+        sniffer_thread.join()
+        print('Killing analyzer thread')
+        analyzer.terminate_sniffer()
+        analyzer_thread.join()
+        print('Killed analyzer thread')
 
 
     def configure_sniffer(self):

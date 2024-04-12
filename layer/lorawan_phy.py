@@ -5,6 +5,7 @@
     initially developed @PentHertz
     and improved at @Trend Micro
 """
+from enum import Enum
 
 from scapy.packet import Packet
 from scapy.fields import BitField, ByteEnumField, ByteField, \
@@ -660,6 +661,20 @@ MTypes = {0b000: "Join-request",
           0b101: "Confirmed Data Down",
           0b110: "Rejoin-request",  # Only in LoRa 1.1 specs
           0b111: "Proprietary"}
+
+
+class MTypesEnum(Enum):
+    join_request = (0b000, "Join-request")
+    join_accept = (0b001, "Join-accept")
+    unconfirmed_data_up = (0b010, "Unconfirmed Data Up")
+    unconfirmed_data_down = (0b011, "Unconfirmed Data Down")
+    confirmed_data_up = (0b100, "Confirmed Data Up")
+    confirmed_data_down = (0b101, "Confirmed Data Down")
+    rejoin_request = (0b110, "Rejoin-request")  # Only in LoRa 1.1 specs
+    proprietary = (0b111, "Proprietary")
+    def __init__(self, bit_value, description):
+        self.bit_value = bit_value
+        self.description = description
 
 
 class MHDR(Packet):  # Same for 1.0 as for 1.1
