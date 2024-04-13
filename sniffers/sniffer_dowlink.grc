@@ -391,7 +391,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [856, 300.0]
+    coordinate: [872, 276.0]
     rotation: 0
     state: enabled
 - name: blocks_freqshift_cc_0_0
@@ -821,7 +821,7 @@ blocks:
     bus_structure: null
     coordinate: [1256, 332.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_10
   id: lora_lora_receiver
   parameters:
@@ -903,9 +903,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1248, 652.0]
+    coordinate: [1248, 644.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_1
   id: lora_lora_receiver
   parameters:
@@ -933,7 +933,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 988.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_2
   id: lora_lora_receiver
   parameters:
@@ -961,7 +961,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 1324.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_3
   id: lora_lora_receiver
   parameters:
@@ -989,7 +989,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 1660.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_4
   id: lora_lora_receiver
   parameters:
@@ -1017,7 +1017,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 1980.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_5
   id: lora_lora_receiver
   parameters:
@@ -1045,7 +1045,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 2308.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_6
   id: lora_lora_receiver
   parameters:
@@ -1073,7 +1073,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 2644.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_7
   id: lora_lora_receiver
   parameters:
@@ -1101,7 +1101,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 2964.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_8
   id: lora_lora_receiver
   parameters:
@@ -1129,7 +1129,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 3292.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_1_9
   id: lora_lora_receiver
   parameters:
@@ -1157,7 +1157,7 @@ blocks:
     bus_structure: null
     coordinate: [1248, 3620.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: lora_lora_receiver_0_0_4_1_2
   id: lora_lora_receiver
   parameters:
@@ -1183,7 +1183,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1248, 492.0]
+    coordinate: [1280, 492.0]
     rotation: 0
     state: enabled
 - name: lora_lora_receiver_0_0_4_1_3
@@ -1211,7 +1211,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1248, 828.0]
+    coordinate: [1288, 828.0]
     rotation: 0
     state: enabled
 - name: lora_lora_receiver_0_0_4_1_4
@@ -1753,7 +1753,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1240, 436.0]
+    coordinate: [1152, 412.0]
     rotation: 0
     state: disabled
 - name: low_pass_filter_0_4_0_0_0

@@ -155,7 +155,11 @@ class GUIManager:
 
             ]),
             SubMenu('Sniffer', [
-                Choice('Sniff', action=self.sniff),
+                SubMenu('Sniff', [
+                    Choice('Sniff Up/Down link', action=self.sniff, path=self.sniffer.bisniff),
+                    Choice('Sniff Uplink', action=self.sniff, path=self.sniffer.upsniff),
+                    Choice('Sniff Downlink', action=self.sniff, path=self.sniffer.downsniff)
+                ]),
                 SubMenu('Configure', [
                     Choice('Edit config/sniffer.config', action=self.sniffer.configure_sniffer)
                 ]),
@@ -170,17 +174,16 @@ class GUIManager:
         global top
         top = HorizontalBoxes()
         top.open_box(menu_top.menu)
-        loop = urwid.MainLoop(urwid.Filler(top, 'middle', 20
-                                           ), palette)
+        loop = urwid.MainLoop(urwid.Filler(top, 'middle', 20), palette)
 
     def run(self):
         loop.run()
 
-    def sniff(self):
+    def sniff(self, path):
         global loop
 
         loop.screen.stop()
-        self.sniffer.run_sniffer_thread()
+        self.sniffer.run_sniffer_thread(path)
         loop.screen.start()
 
     def on_change(self, text):
