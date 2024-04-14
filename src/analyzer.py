@@ -3,14 +3,12 @@ from threading import Event
 from layer.lorawan_phy import LoRa, MTypesEnum
 from scapy.layers.inet import *
 
-from Crypto.Cipher import AES
-
+from src.crypto_tools import CryptoTool
 from src.command_handler import CommandHandler
 from src.session_manager import SessionManager, SessionParams
 from datetime import datetime
 
-# Load the pcap file
-pcap_file = "/home/pentester/Documents/gnuradio/new4.pcap"
+pcap_file = "/home/pentester/lorattack/session/data/clean/2024-04-14_14-03-10.pcap"
 
 
 class Analyzer(CommandHandler):
@@ -19,6 +17,7 @@ class Analyzer(CommandHandler):
         self.packets = []
         self.stop_event = Event()
         self.session_manager = SessionManager()
+        self.crypto_tool = CryptoTool()
 
     def analyze_pcap(self, file_path):
         packets = rdpcap(file_path)
@@ -49,21 +48,64 @@ class Analyzer(CommandHandler):
                                                       packet.Join_Request_Field[0].AppEUI.hex())
             self.session_manager.update_session_value(SessionParams.JoinRequest_DevNonce,
                                                       format(packet.Join_Request_Field[0].DevNonce, '02x'))
-        if packet.MType == MTypesEnum.join_accept.bit_value:
+        elif packet.MType == MTypesEnum.join_accept.bit_value:
             print('Found Join Accept')
             if self.session_manager.get_session_value(SessionParams.AppKey) is not None:
-                decrypted_join_accept=self.decrypt_join_accept(packet[UDP].load, bytes(self.session_manager.get_session_value(SessionParams.AppKey)))
+                decrypted_join_accept = CryptoTool.decrypt_join_accept(packet[UDP].load, bytes(
+                    self.session_manager.get_session_value(SessionParams.AppKey)))
                 decoded_join_accept = LoRa(decrypted_join_accept)
                 print('Successfuly decrypted Join Accept messages')
                 print('Computing session keys')
-                self.session_manager.update_session_value(SessionParams.JoinAccept_AppNonce, format(packet.Join_Accept_Field[0].JoinAppNonce, '02x'))
-                self.session_manager.update_session_value(SessionParams.JoinAccept_JoinNonce, format(packet.Join_Accept_Field[0].JoinAppNonce, '02x'))
-                self.session_manager.update_session_value(SessionParams.JoinAccept_DevAddr, packet.Join_Request_Field[0].DevAddr.hex())
-                self.session_manager.update_session_value(SessionParams.JoinAccept_NetID, packet.Join_Request_Field[0].NetID.hex())
+                self.session_manager.update_session_value(SessionParams.JoinAccept_AppNonce,
+                                                          format(packet.Join_Accept_Field[0].JoinAppNonce, '02x'))
+                self.session_manager.update_session_value(SessionParams.JoinAccept_JoinNonce,
+                                                          format(packet.Join_Accept_Field[0].JoinAppNonce, '02x'))
+                self.session_manager.update_session_value(SessionParams.JoinAccept_DevAddr,
+                                                          packet.Join_Request_Field[0].DevAddr.hex())
+                self.session_manager.update_session_value(SessionParams.JoinAccept_NetID,
+                                                          packet.Join_Request_Field[0].NetID.hex())
 
-    def compute_session_keys(self):
-        #TODO
-        pass
+                nwk_skey, app_skey, FNwkSIntKey, SNwkSIntKey, NwkSEncKey = CryptoTool.derive_session_keys(
+                    self.session_manager.get_session_value(SessionParams.AppKey),
+                    self.session_manager.get_session_value(SessionParams.NwkKey),
+                    self.session_manager.get_session_value(SessionParams.JoinRequest_JoinEUI),
+                    self.session_manager.get_session_value(SessionParams.JoinAccept_AppNonce),
+                    self.session_manager.get_session_value(SessionParams.JoinAccept_NetID),
+                    self.session_manager.get_session_value(SessionParams.JoinRequest_DevNonce))
+
+                self.session_manager.update_session_value(SessionParams.NwkSKey, nwk_skey)
+                self.session_manager.update_session_value(SessionParams.AppSKey, app_skey)
+                self.session_manager.update_session_value(SessionParams.FNwkSIntKey, FNwkSIntKey)
+                self.session_manager.update_session_value(SessionParams.SNwkSIntKey, SNwkSIntKey)
+                self.session_manager.update_session_value(SessionParams.NwkSEncKey, NwkSEncKey)
+        elif packet.MType == MTypesEnum.unconfirmed_data_up.bit_value:
+            print('Found Unconfirmed Data Up')
+            if self.session_manager.get_session_value(SessionParams.AppSKey) is not None:
+                print('Decrypting payload')
+                session_key = self.session_manager.get_session_value(SessionParams.AppSKey)
+                pt = self.crypto_tool.FRMPayload_decrypt(packet.ULDataPayload.hex(), packet.FCnt, session_key, self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr), 0)
+                print(bytes(pt).hex(), bytes(pt).decode('iso-8859-1'))
+        elif packet.MType == MTypesEnum.confirmed_data_up.bit_value:
+            print('Found Confirmed Data Up')
+            if self.session_manager.get_session_value(SessionParams.AppSKey) is not None:
+                print('Decrypting payload')
+                session_key = self.session_manager.get_session_value(SessionParams.AppSKey)
+                pt = self.crypto_tool.FRMPayload_decrypt(packet.ULDataPayload.hex(), packet.FCnt, session_key, self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr), 0)
+                print(bytes(pt).hex(), bytes(pt).decode('iso-8859-1'))
+        elif packet.MType == MTypesEnum.unconfirmed_data_down.bit_value:
+            print('Found Unconfirmed Data Up')
+            if self.session_manager.get_session_value(SessionParams.AppSKey) is not None:
+                print('Decrypting payload')
+                session_key = self.session_manager.get_session_value(SessionParams.AppSKey)
+                pt = self.crypto_tool.FRMPayload_decrypt(packet.DLDataPayload.hex(), packet.FCnt, session_key, self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr), 0)
+                print(bytes(pt).hex(), bytes(pt).decode('iso-8859-1'))
+        elif packet.MType == MTypesEnum.confirmed_data_down.bit_value:
+            print('Found Confirmed Data Up')
+            if self.session_manager.get_session_value(SessionParams.AppSKey) is not None:
+                print('Decrypting payload')
+                session_key = self.session_manager.get_session_value(SessionParams.AppSKey)
+                pt = self.crypto_tool.FRMPayload_decrypt(packet.DLDataPayload.hex(), packet.FCnt, session_key, self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr), 0)
+                print(bytes(pt).hex(), bytes(pt).decode('iso-8859-1'))
 
 
     def packet_callback(self, packet):
@@ -79,16 +121,6 @@ class Analyzer(CommandHandler):
     def stop_filter_func(self, packet):
         return self.stop_event.is_set()
 
-    def decrypt_join_accept(self, packet, appkey):
-        payload = packet[4:-2]  #remove chcksum
-        cipher = AES.new(appkey, AES.MODE_ECB)
-        return cipher.encrypt(payload)
-
-    def encrypt_join_accept(self, packet, appkey):
-        payload = packet[4:]
-        cipher = AES.new(appkey, AES.MODE_ECB)
-        return cipher.decrypt(payload)
-
     def live_sniffing(self):
         print('sniffing...')
         sniff(iface="lo", prn=self.packet_callback, stop_filter=self.stop_filter_func)
@@ -98,14 +130,11 @@ class Analyzer(CommandHandler):
         path = self.session_manager.sessions_dir + '/' + self.session_manager.get_current_session_name() + '/'
         wrpcap(path + filename, self.packets)
         print(f"Saved {len(self.packets)} packets to {filename}")
-        command = ['bittwiste', '-I', path + filename, '-O', path + 'edited_' + filename, '-M', '147', '-D', '1-42']
+        command = ['bittwiste', '-I', path + filename, '-O', path + 'wireshark_' + filename, '-M', '147', '-D', '1-42']
         self.execute_command(command)
 
     def terminate_sniffer(self):
         self.stop_event.set()
-
-
-
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ from datetime import datetime
 
 class SessionParams(Enum):
     AppKey = auto()
+    NwkKey = auto()
     JoinRequest_DevEUI = auto()
     JoinRequest_AppEUI = auto()
     JoinRequest_JoinEUI = auto()
@@ -20,7 +21,6 @@ class SessionParams(Enum):
     NwkSEncKey = auto()
     SNwkSIntKey = auto()
     FNwkSIntKey = auto()
-    DevAddr = auto()
 
 
 class SessionManager:
@@ -76,6 +76,13 @@ class SessionManager:
 
     def list_sessions(self):
         return [d for d in os.listdir(self.sessions_dir) if os.path.isdir(os.path.join(self.sessions_dir, d))]
+
+    def list_pcap_files(self):
+        _, session_data = self.load_current_session()
+        current_session_name, _ = self.load_current_session()
+        session_dir = os.path.join(self.sessions_dir, current_session_name)
+        pcap_files = [f for f in os.listdir(session_dir) if f.endswith('.pcap') and not f.startswith('wireshark')]
+        return pcap_files
 
 
 if __name__ == "__main__":

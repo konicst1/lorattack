@@ -166,7 +166,8 @@ class GUIManager:
 
             ]),
             SubMenu('Analyzer', [
-                Choice('wifite2', action=run_wifi_security_attacks),
+                Choice(name, action=self.activate_session, text=name) for name in
+                self.session_manager.list_pcap_files()
             ]),
             Choice('Exit'),
         ])
