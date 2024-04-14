@@ -57,13 +57,13 @@ class Analyzer(CommandHandler):
                 print('Successfuly decrypted Join Accept messages')
                 print('Computing session keys')
                 self.session_manager.update_session_value(SessionParams.JoinAccept_AppNonce,
-                                                          format(packet.Join_Accept_Field[0].JoinAppNonce, '02x'))
+                                                          format(decoded_join_accept.Join_Accept_Field[0].JoinAppNonce, '02x'))
                 self.session_manager.update_session_value(SessionParams.JoinAccept_JoinNonce,
-                                                          format(packet.Join_Accept_Field[0].JoinAppNonce, '02x'))
+                                                          format(decoded_join_accept.Join_Accept_Field[0].JoinAppNonce, '02x'))
                 self.session_manager.update_session_value(SessionParams.JoinAccept_DevAddr,
-                                                          packet.Join_Request_Field[0].DevAddr.hex())
+                                                          decoded_join_accept.Join_Request_Field[0].DevAddr.hex())
                 self.session_manager.update_session_value(SessionParams.JoinAccept_NetID,
-                                                          packet.Join_Request_Field[0].NetID.hex())
+                                                          decoded_join_accept.Join_Request_Field[0].NetID.hex())
 
                 nwk_skey, app_skey, FNwkSIntKey, SNwkSIntKey, NwkSEncKey = CryptoTool.derive_session_keys(
                     self.session_manager.get_session_value(SessionParams.AppKey),

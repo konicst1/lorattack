@@ -2,6 +2,7 @@ from __future__ import annotations
 import threading
 from src.sniffer import Sniffer
 from src.session_manager import SessionManager
+from src.analyzer import Analyzer
 import urwid
 
 loop = None
@@ -62,38 +63,6 @@ def start_scanning(ifc, button=None):
     loop.screen.start()
 
 
-def run_kr00k(tool, target, ifc, button=None):
-    global loop
-    print(f"Running {tool} in {target} mode on interface {ifc}")
-
-    loop.screen.stop()
-
-    loop.screen.start()
-
-
-def run_wifi_security_attacks(button=None):
-    global loop
-
-    loop.screen.stop()
-    loop.screen.start()
-
-
-def run_frag(button=None):
-    global loop
-
-    loop.screen.stop()
-    # frag_attack.run_frag()
-    loop.screen.start()
-
-
-def store_frag_cfg(ifc, param, button=None):
-    global loop
-
-    loop.screen.stop()
-    # frag_attack.store_cfg(param, ifc)
-    loop.screen.start()
-
-
 palette = [
     (None, 'light gray', 'black'),
     ('heading', 'black', 'light gray'),
@@ -141,6 +110,7 @@ class GUIManager:
     def __init__(self):
         self.sniffer = Sniffer()
         self.session_manager = SessionManager()
+        self.analyzer = Analyzer()
         self.edit = EnterReactEdit("Enter something: ", on_enter=self.on_change)
 
         menu_top = SubMenu('LoRaWAN Tester', [
@@ -166,7 +136,7 @@ class GUIManager:
 
             ]),
             SubMenu('Analyzer', [
-                Choice(name, action=self.activate_session, text=name) for name in
+                Choice(name, action=self.analyze_pcap, pcap=name) for name in
                 self.session_manager.list_pcap_files()
             ]),
             Choice('Exit'),
@@ -193,3 +163,7 @@ class GUIManager:
 
     def activate_session(self, text):
         self.session_manager.activate_session(text)
+
+    def analyze_pcap(self, pcap):
+        path = self.session_manager.sessions_dir + '/' + self.session_manager.get_current_session_name() + '/' + pcap
+        self.analyzer.analyze_pcap(path)
