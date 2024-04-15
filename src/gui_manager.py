@@ -139,6 +139,12 @@ class GUIManager:
                 Choice(name, action=self.analyze_pcap, pcap=name) for name in
                 self.session_manager.list_pcap_files()
             ]),
+            SubMenu('Attack', [
+                SubMenu('Replay', [
+                    Choice('Join Request'),
+                    Choice('Join Accept')
+                ]),
+            ]),
             Choice('Exit'),
         ])
         global loop
