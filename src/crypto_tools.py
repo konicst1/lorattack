@@ -1,7 +1,7 @@
 import sys
 
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
+from Crypto.Hash import CMAC
 import binascii
 from binascii import unhexlify
 
@@ -47,6 +47,11 @@ class CryptoTool():
         NwkSEncKey = self.aes_encrypt(nwk_key, 0x04, app_nonce, join_eui, dev_nonce)
 
         return nwk_skey, app_skey, FNwkSIntKey, SNwkSIntKey, NwkSEncKey
+
+    def compute_MIC(self, key, data):
+        cobj = CMAC.new(key, ciphermod=AES)
+        res = cobj.update(data).hexdigest()
+        return res[0:8]
 
     def __to_bytes(self, s):
         if sys.version_info < (3,):
@@ -148,3 +153,6 @@ if __name__ == "__main__":
     print(pt)
     print(bytes(pt).hex())
     print(bytes(pt).decode('iso-8859-1'))
+    print(bytes.fromhex('18311040de4e0b2680080001b7bdb6a97da328f44fe5ece3d71f063920')[3:-4])
+    mic = c.compute_MIC(bytes.fromhex('C1076C63B971710A708E3471A7C803D7'),bytes.fromhex('40de4e0b2680080001b7bdb6a97da328f44fe5ece3d7'))
+    print(mic)

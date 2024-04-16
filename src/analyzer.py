@@ -51,7 +51,7 @@ class Analyzer(CommandHandler):
         elif packet.MType == MTypesEnum.join_accept.bit_value:
             print('Found Join Accept')
             if self.session_manager.get_session_value(SessionParams.AppKey) is not None:
-                decrypted_join_accept = CryptoTool.decrypt_join_accept(packet[UDP].load, bytes(
+                decrypted_join_accept = CryptoTool.decrypt_join_accept(raw_packet[UDP].load, bytes(
                     self.session_manager.get_session_value(SessionParams.AppKey)))
                 decoded_join_accept = LoRa(decrypted_join_accept)
                 print('Successfuly decrypted Join Accept messages')
