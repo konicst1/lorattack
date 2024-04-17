@@ -3,7 +3,7 @@ import json
 from src.command_handler import CommandHandler
 from src.session_manager import SessionManager, SessionParams
 from src.crypto_tools import CryptoTool
-from layer.lorawan_phy import *
+from src.analyzer import Analyzer
 
 
 class Player(CommandHandler):
@@ -12,6 +12,7 @@ class Player(CommandHandler):
         self.TRANSMITTER_PATH = './sniffers/lora_transmitter.py'
         self.session_manager = SessionManager()
         self.crypto_tool = CryptoTool()
+        self.analyzer = Analyzer()
 
     def __replay_message(self, message):
         with open('./config/transmitter.config', 'r') as file:
@@ -21,7 +22,7 @@ class Player(CommandHandler):
         frequency = str(parameters['frequency'])
         spreading_factor = str(parameters['spreading_factor'])
         gain = str(parameters['gain_db'])
-        script_path = './sniffers/packet_transmitter.py'
+        script_path = './sniffers/lora_transmitter.py'
         command = ['python3', script_path, '--frequency', frequency, '--bandwidth', bandwidth, '--samp-rate',
                    sample_rate, '--spreading-factor', spreading_factor, '--gain-db', gain, '--message', message]
         self.execute_command(command)
@@ -62,13 +63,18 @@ class Player(CommandHandler):
 
         PAYLOAD = MHDR + JOIN_APP_NONCE + NET_ID + DEV_ADDR + OTHER
 
-        PACKET = PHY + PAYLOAD + self.crypto_tool.compute_MIC(bytes.fromhex(self.session_manager.get_session_value(SessionParams.NwkKey)), bytes.fromhex(PAYLOAD))
+        PACKET = PHY + PAYLOAD + self.crypto_tool.compute_MIC(
+            bytes.fromhex(self.session_manager.get_session_value(SessionParams.NwkKey)), bytes.fromhex(PAYLOAD))
 
         self.__replay_message(PACKET)
-        # packet.Join_Accept_Field = join_accept_payload
         # Join-accept	MHDR | JoinNonce | NetID | DevAddr | DLSettings | RxDelay | CFList
 
+    def replay_sequence_from_pcap(self, script_path):
+        # TODO add support for multiple payloads
+        payloads = self.analyzer.get_packet_sequence_from_pcap(script_path)
 
+        for payload in payloads:
+            self.__replay_message(payload)
 
 
 if __name__ == "__main__":

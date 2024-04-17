@@ -2,7 +2,7 @@ import os
 import json
 from enum import Enum, auto
 from typing import Dict, Any
-from datetime import datetime
+from src.command_handler import CommandHandler
 
 
 class SessionParams(Enum):
@@ -23,7 +23,7 @@ class SessionParams(Enum):
     FNwkSIntKey = auto()
 
 
-class SessionManager:
+class SessionManager(CommandHandler):
     def __init__(self):
         self.sessions_dir = 'session/data'
         self.current_session_file = 'session/current_session'
@@ -74,6 +74,30 @@ class SessionManager:
         with open(os.path.join(session_dir, 'data.json'), 'w') as f:
             json.dump(session_data_str, f, indent=4)
 
+    def manage_sequence_file(self):
+        current_session_name, _ = self.load_current_session()
+        sequence_file_path = os.path.join(self.sessions_dir, current_session_name, 'sequence')
+        if not os.path.exists(sequence_file_path):
+            with open(sequence_file_path, 'w') as f:
+                f.write('')
+        command = ['gedit', sequence_file_path]
+        self.execute_command(command)
+
+    def read_sequence_file(self):
+        current_session_name, _ = self.load_current_session()
+        sequence_file_path = os.path.join(self.sessions_dir, current_session_name, 'sequence')
+
+        try:
+            with open(sequence_file_path, 'r') as file:
+                contents = file.read().strip()
+                # Split the string by commas and convert each part to an integer
+                return [int(num) for num in contents.split(',') if num.strip().isdigit()]
+        except FileNotFoundError:
+            print(f"No sequence file found in the session directory: {sequence_file_path}")
+            return []
+        except ValueError:
+            print("Error processing the sequence file. Ensure the file contains only integers separated by commas.")
+            return []
     def list_sessions(self):
         return [d for d in os.listdir(self.sessions_dir) if os.path.isdir(os.path.join(self.sessions_dir, d))]
 

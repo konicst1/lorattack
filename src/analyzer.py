@@ -41,6 +41,14 @@ class Analyzer(CommandHandler):
                     print("Packet could not be decoded")
 
 
+    def get_packet_sequence_from_pcap(self, path):
+        packets = rdpcap(path)
+        indexes=self.session_manager.read_sequence_file()
+        payloads = []
+        for i in indexes:
+            payloads.append(packets[i][UDP].load.hex())
+
+        return payloads
 
     def analyze_lora_packet(self, packet, raw_packet):
         if packet.MType == MTypesEnum.join_request.bit_value:

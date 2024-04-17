@@ -1,5 +1,5 @@
 from __future__ import annotations
-import threading
+from src.player import Player
 from src.sniffer import Sniffer
 from src.session_manager import SessionManager
 from src.analyzer import Analyzer
@@ -111,6 +111,7 @@ class GUIManager:
         self.sniffer = Sniffer()
         self.session_manager = SessionManager()
         self.analyzer = Analyzer()
+        self.player = Player()
         self.edit = EnterReactEdit("Enter something: ", on_enter=self.on_change)
 
         menu_top = SubMenu('LoRaWAN Tester', [
@@ -144,9 +145,9 @@ class GUIManager:
                     Choice('Join Request'),
                     Choice('Join Accept'),
                     SubMenu('From pcap', [
-                        Choice(name, action=self.analyze_pcap, pcap=name) for name in self.session_manager.list_pcap_files()
+                        Choice(name, action=self.replay_sequence_from_pcap, pcap=name) for name in self.session_manager.list_pcap_files()
                     ]),
-                    Choice('Edit replay sequence'),
+                    Choice('Edit replay sequence', action=self.edit_replay_sequence),
                 ]),
             ]),
             Choice('Exit'),
@@ -174,6 +175,21 @@ class GUIManager:
     def activate_session(self, text):
         self.session_manager.activate_session(text)
 
+    def edit_replay_sequence(self):
+        global loop
+
+        loop.screen.stop()
+        self.session_manager.manage_sequence_file()
+        loop.screen.start()
+
     def analyze_pcap(self, pcap):
         path = self.session_manager.sessions_dir + '/' + self.session_manager.get_current_session_name() + '/' + pcap
         self.analyzer.analyze_pcap(path)
+
+    def replay_sequence_from_pcap(self, pcap):
+        global loop
+
+        loop.screen.stop()
+        path = self.session_manager.sessions_dir + '/' + self.session_manager.get_current_session_name() + '/' + pcap
+        self.player.replay_sequence_from_pcap(path)
+        loop.screen.start()
