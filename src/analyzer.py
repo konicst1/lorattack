@@ -19,6 +19,9 @@ class Analyzer(CommandHandler):
         self.session_manager = SessionManager()
         self.crypto_tool = CryptoTool()
 
+
+
+
     def analyze_pcap(self, file_path):
         packets = rdpcap(file_path)
 
@@ -36,6 +39,8 @@ class Analyzer(CommandHandler):
                     print(repr(decoded))
                 except:
                     print("Packet could not be decoded")
+
+
 
     def analyze_lora_packet(self, packet, raw_packet):
         if packet.MType == MTypesEnum.join_request.bit_value:

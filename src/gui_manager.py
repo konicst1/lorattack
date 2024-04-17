@@ -142,7 +142,11 @@ class GUIManager:
             SubMenu('Attack', [
                 SubMenu('Replay', [
                     Choice('Join Request'),
-                    Choice('Join Accept')
+                    Choice('Join Accept'),
+                    SubMenu('From pcap', [
+                        Choice(name, action=self.analyze_pcap, pcap=name) for name in self.session_manager.list_pcap_files()
+                    ]),
+                    Choice('Edit replay sequence'),
                 ]),
             ]),
             Choice('Exit'),
