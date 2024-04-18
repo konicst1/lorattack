@@ -23,6 +23,9 @@ class Player(CommandHandler):
         spreading_factor = str(parameters['spreading_factor'])
         gain = str(parameters['gain_db'])
         script_path = './sniffers/lora_transmitter.py'
+
+        print('Playing: ' + message)
+
         command = ['python3', script_path, '--frequency', frequency, '--bandwidth', bandwidth, '--samp-rate',
                    sample_rate, '--spreading-factor', spreading_factor, '--gain-db', gain, '--message', message]
         self.execute_command(command)
@@ -69,14 +72,42 @@ class Player(CommandHandler):
         self.__replay_message(PACKET)
         # Join-accept	MHDR | JoinNonce | NetID | DevAddr | DLSettings | RxDelay | CFList
 
+    def spoof_JoinRequest(self):
+        # join accept structure
+        # https://lora-developers.semtech.com/documentation/tech-papers-and-guides/lorawan-device-activation/device-activation/
+        if self.session_manager.get_session_value(SessionParams.NwkKey) is None:
+            print('Missing NwkKey')
+            return
+
+        PHY = '173180'
+        MHDR = '00'
+        JOIN_APP_EUI = '0000000000000000'
+        if self.session_manager.get_session_value(SessionParams.JoinRequest_JoinEUI) is not None:
+            JOIN_APP_EUI = self.session_manager.get_session_value(SessionParams.JoinRequest_JoinEUI)
+        DEV_EUI = '3333333333333333'
+        if self.session_manager.get_session_value(SessionParams.JoinRequest_DevEUI) is not None:
+            DEV_EUI = self.session_manager.get_session_value(SessionParams.JoinRequest_DevEUI)
+        DEV_NONCE = '1234'
+
+        PAYLOAD = MHDR + JOIN_APP_EUI + DEV_EUI + DEV_NONCE
+        MIC = self.crypto_tool.compute_MIC(bytes.fromhex(self.session_manager.get_session_value(SessionParams.NwkKey)), bytes.fromhex(PAYLOAD))
+
+        PACKET = PHY + PAYLOAD + MIC
+
+        self.__replay_message(PACKET)
+
     def replay_sequence_from_pcap(self, script_path):
         # TODO add support for multiple payloads
         payloads = self.analyzer.get_packet_sequence_from_pcap(script_path)
-
         for payload in payloads:
             self.__replay_message(payload)
+
+    def configure_transmitter(self):
+        config_path = './config/transmitter.config'
+        command = ['gedit', config_path]
+        self.execute_command(command)
 
 
 if __name__ == "__main__":
     p = Player()
-    p.spoof_JoinAccept()
+    p.spoof_JoinRequest()

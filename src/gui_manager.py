@@ -112,7 +112,7 @@ class GUIManager:
         self.session_manager = SessionManager()
         self.analyzer = Analyzer()
         self.player = Player()
-        self.edit = EnterReactEdit("Enter something: ", on_enter=self.on_change)
+        self.edit = EnterReactEdit("Enter name: ", on_enter=self.on_change)
 
         menu_top = SubMenu('LoRaWAN Tester', [
             SubMenu('Session', [
@@ -142,12 +142,13 @@ class GUIManager:
             ]),
             SubMenu('Attack', [
                 SubMenu('Replay', [
-                    Choice('Join Request'),
+                    Choice('Join Request', action=self.player.spoof_JoinRequest),
                     Choice('Join Accept'),
                     SubMenu('From pcap', [
                         Choice(name, action=self.replay_sequence_from_pcap, pcap=name) for name in self.session_manager.list_pcap_files()
                     ]),
                     Choice('Edit replay sequence', action=self.edit_replay_sequence),
+                    Choice('Configure transmitter', action=self.player.configure_transmitter),
                 ]),
             ]),
             Choice('Exit'),
