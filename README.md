@@ -9,6 +9,8 @@ This repository provides a toolkit for assessing LoRaWAN network security. Here'
 * **Vulnerability Testing:** Replay specific payloads to probe for known LoRaWAN vulnerabilities during security assessments.
 * **Attack Guidance:** Access detailed descriptions of attacks and step-by-step guides to streamline your testing process.
 
+![](fig/overview.png)
+
 # Table of Contents
 - [**Installation**](#installation)
 - [**Usage**](#usage)
@@ -102,7 +104,7 @@ To edit session data, edit the _session/data/<session_name>/data.json_ file.
 
 LoRAttack's sniffer captures LoRaWAN traffic across multiple channels around a specified center frequency, enabling real-time decoding and decryption (if keys are available).
 
-
+![](fig/sniffer.png)
 
 * **Sniff:** This submenu allows you to capture LoRaWAN traffic:
     * **Sniff Up/Down link (Bidirectional):** Starts capturing both uplink (devices to network) and downlink (network to devices) traffic. **Note:** Bidirectional capture may result in duplicate packets if the same data is sent in both directions.
@@ -122,6 +124,8 @@ LoRAttack's sniffer captures LoRaWAN traffic across multiple channels around a s
     * Keys can be specified manually.
     * Keys can be derived automatically if Join Request and Join Accept messages are captured within (AppKey must be configured manually)
 
+![](fig/analysed_packets.png)
+
 **Packet Storage:**
 
 * All sniffed packets are stored in PCAP format within the current session's directory.
@@ -131,11 +135,15 @@ LoRAttack's sniffer captures LoRaWAN traffic across multiple channels around a s
 
 The Analyzer submenu displays a list of PCAP files associated with your active session. Selecting a PCAP file initiates an analysis process:
 
+![](fig/analyzer.png)
+
 * **Traffic Analysis:** The analyzer examines the packet structure and decodes the LoRaWAN communication and updates session values if Join Request/Accept messages are found.
 * **Decryption (if applicable):** If the session configuration contains the necessary cryptographic keys (NwkSKey and AppSKey), the analyzer attempts to decrypt the packet payloads.
 
 
-### Attack
+## Attack
+![](fig/replay.png)
+
 * **Replay:** 
     * **From PCAP:** Select a PCAP file (containing captured packets) from the listed options to replay a sequence of packets.
     * **Edit Replay Sequence:** Manually edit the packet sequence from the chosen pcap to be replayed.
