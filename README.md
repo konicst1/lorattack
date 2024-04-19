@@ -55,7 +55,7 @@ sudo apt-get install libuhd-dev uhd-host
 git clone https://github.com/konicst1/lorattack.git
 ```
 
-**4. Install Python Dependencies:**
+**4. Install Dependencies:**
 
 Navigate to the toolkit directory and install dependencies:
 
@@ -64,6 +64,11 @@ cd lorattack
 source venv/bin/activate
 pip install -r requirements.txt
 ```
+
+Also install gr-lora libraries from:
+
+*** https://github.com/rpp0/gr-lora ***
+*** https://github.com/tapparelj/gr-lora_sdr ***
 
 **5. Update Python Paths (if using virtual environment):**
 
