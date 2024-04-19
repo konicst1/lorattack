@@ -9,6 +9,22 @@ This repository provides a toolkit for assessing LoRaWAN network security. Here'
 * **Vulnerability Testing:** Replay specific payloads to probe for known LoRaWAN vulnerabilities during security assessments.
 * **Attack Guidance:** Access detailed descriptions of attacks and step-by-step guides to streamline your testing process.
 
+# Table of Contents
+- [**Installation**](#installation)
+- [**Usage**](#usage)
+  - [**Session**](#session)
+  - [**Sniffer**](#sniffer)
+    - Sniff
+    - Configure
+    - Decoding and Decryption
+    - Packet Storage
+  - [**Analyzer**](#analyzer)
+  - [**Attack**](#attack)
+    - Replay
+    - Craft packets
+  - **[Exit](#exit)**
+
+
 ## Installation
 
 **Requirements:**
@@ -121,12 +137,12 @@ The Analyzer submenu displays a list of PCAP files associated with your active s
 * **Replay:** 
     * **From PCAP:** Select a PCAP file (containing captured packets) from the listed options to replay a sequence of packets.
     * **Edit Replay Sequence:** Manually edit the packet sequence from the chosen pcap to be replayed.
+* **Craft packets:**
+  * **Spoof Join Request:** Crafts a Join Request message based on values from the current session (JoinEUI, DevEUI) and transmits it with SDR. If some of them are not present, default values are applied. AppKey/NwkKey is required to compute MIC.
+  * **Spoof Join Accept:** Crafts a Join Request message based on values from the current session (NetID, DevAddr) and transmits it with SDR. If some of them are not present, default values are applied. AppKey/NwkKey is required to compute MIC and encryption.
+  * **Spoof ACK Message:** Crafts and ACK message based on values from the session data (DevAddr, FCnt is set to 0xFFF0 to good chances for DoS) and transmits it with SDR. NwkSKey is required for MIC computation.
 
-* **Spoof Join Request:** Crafts a Join Request message based on values from the current session (JoinEUI, DevEUI) and transmits it with SDR. If some of them are not present, default values are applied. AppKey/NwkKey is required to compute MIC.
-* **Spoof Join Accept:** Crafts a Join Request message based on values from the current session (NetID, DevAddr) and transmits it with SDR. If some of them are not present, default values are applied. AppKey/NwkKey is required to compute MIC and encryption.
-* **Spoof ACK Message:** Crafts and ACK message based on values from the session data (DevAddr, FCnt is set to 0xFFF0 to good chances for DoS) and transmits it with SDR. NwkSKey is required for MIC computation.
-
-**Note:** Refer to the Sniffer Configuration section for details on configuring transmitter parameters used during replay attacks (e.g., frequency, gain).
+* **Configure transmitter:** Refer to the Sniffer Configuration section for details on configuring transmitter parameters used during replay attacks (e.g., frequency, gain).
 
 This revised section avoids code snippets and focuses on user-friendly descriptions of the attack functionalities. It also clarifies the purpose of each attack option. 
 ### Exit
