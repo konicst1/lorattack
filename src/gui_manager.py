@@ -150,8 +150,8 @@ class GUIManager:
                 ]),
                 SubMenu('Craft Packets', [
                     Choice('Spoof Join Request', action=self.player.spoof_JoinRequest),
-                    Choice('Spoof Join Accept'),
-                    Choice('Spoof ACK Message'),
+                    Choice('Spoof Join Accept', action=self.player.spoof_JoinAccept),
+                    Choice('Spoof ACK Message', action=self.player.spoof_ACK),
                 ]),
                 Choice('Configure transmitter', action=self.player.configure_transmitter),
 
