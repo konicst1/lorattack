@@ -69,7 +69,9 @@ class Player(CommandHandler):
         PACKET = PHY + PAYLOAD + self.crypto_tool.compute_MIC(
             bytes.fromhex(self.session_manager.get_session_value(SessionParams.NwkKey)), bytes.fromhex(PAYLOAD))
 
-        self.__replay_message(PACKET)
+        ENC_PACKET = self.crypto_tool.encrypt_join_accept(PACKET, bytes.fromhex(self.session_manager.get_session_value(SessionParams.NwkKey)))
+
+        self.__replay_message(ENC_PACKET)
         # Join-accept	MHDR | JoinNonce | NetID | DevAddr | DLSettings | RxDelay | CFList
 
     def spoof_JoinRequest(self):

@@ -142,14 +142,16 @@ class GUIManager:
             ]),
             SubMenu('Attack', [
                 SubMenu('Replay', [
-                    Choice('Join Request', action=self.player.spoof_JoinRequest),
-                    Choice('Join Accept'),
                     SubMenu('From pcap', [
                         Choice(name, action=self.replay_sequence_from_pcap, pcap=name) for name in self.session_manager.list_pcap_files()
                     ]),
                     Choice('Edit replay sequence', action=self.edit_replay_sequence),
-                    Choice('Configure transmitter', action=self.player.configure_transmitter),
                 ]),
+                Choice('Spoof Join Request', action=self.player.spoof_JoinRequest),
+                Choice('Spoof Join Accept'),
+                Choice('Spoof ACK Message'),
+                Choice('Configure transmitter', action=self.player.configure_transmitter),
+
             ]),
             Choice('Exit'),
         ])

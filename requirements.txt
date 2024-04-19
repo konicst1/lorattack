@@ -1,0 +1,4 @@
+cryptography
+pycryptodome==3.20.0
+scapy==2.5.0
+urwid
