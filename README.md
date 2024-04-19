@@ -94,6 +94,8 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
 Separate sessions are important for decryption. Each session in LoRAttack extracts handshake data to derive unique keys for captured packets within that session, enabling detailed analysis.
 
+To edit session data, edit the _session/data/<session_name>/data.json_ file.
+
 
 
 ### Sniffer
