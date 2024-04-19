@@ -67,8 +67,8 @@ pip install -r requirements.txt
 
 Also install gr-lora libraries from:
 
-*** https://github.com/rpp0/gr-lora ***
-*** https://github.com/tapparelj/gr-lora_sdr ***
+* https://github.com/rpp0/gr-lora 
+* https://github.com/tapparelj/gr-lora_sdr 
 
 **5. Update Python Paths (if using virtual environment):**
 
