@@ -153,6 +153,10 @@ class GUIManager:
                     Choice('Spoof Join Accept', action=self.player.spoof_JoinAccept),
                     Choice('Spoof ACK Message', action=self.player.spoof_ACK),
                 ]),
+                SubMenu('Jammer', [
+                    Choice('Jam', action=self.player.jam),
+                    Choice('Configure jammer', action=self.player.configure_jammer),
+                ]),
                 Choice('Configure transmitter', action=self.player.configure_transmitter),
 
             ]),

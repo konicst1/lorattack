@@ -30,6 +30,25 @@ class Player(CommandHandler):
                    sample_rate, '--spreading-factor', spreading_factor, '--gain-db', gain, '--message', message]
         self.execute_command(command)
 
+    def jam(self):
+        with open('./config/transmitter.config', 'r') as file:
+            parameters = json.load(file)
+        sample_rate = parameters['sample_rate']
+        bandwidth = parameters['bandwidth']
+        frequency = str(parameters['frequency'])
+        spreading_factor = str(parameters['spreading_factor'])
+        gain = str(parameters['gain_db'])
+        script_path = './sniffers/jammer.config'
+
+
+        print('Jamming')
+
+        MESSAGE='0000002011111100000033333333000012234556'
+
+        command = ['python3', script_path, '--frequency', frequency, '--bandwidth', bandwidth, '--samp-rate',
+                   sample_rate, '--spreading-factor', spreading_factor, '--gain-db', gain, '--message', MESSAGE]
+        self.execute_command(command)
+
     def spoof_ACK(self):
         MHDR = '60'  # unconfirmed data down
         DEV_ADDR = self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr)
@@ -106,6 +125,12 @@ class Player(CommandHandler):
 
     def configure_transmitter(self):
         config_path = './config/transmitter.config'
+        command = ['gedit', config_path]
+        self.execute_command(command)
+
+
+    def configure_jammer(self):
+        config_path = './config/jammer.config'
         command = ['gedit', config_path]
         self.execute_command(command)
 
