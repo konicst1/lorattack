@@ -12,6 +12,10 @@ pcap_file = "/home/pentester/lorattack/session/data/clean/2024-04-14_14-03-10.pc
 
 
 class Analyzer(CommandHandler):
+    """Analyzer class for processing LoRaWAN data..
+
+    This class provides functionalities to extract LoRaWAN messages from PCAP files and potentially perform further analysis on the captured data.
+    """
 
     def __init__(self):
         self.packets = []
@@ -19,10 +23,18 @@ class Analyzer(CommandHandler):
         self.session_manager = SessionManager()
         self.crypto_tool = CryptoTool()
 
-
-
-
     def analyze_pcap(self, file_path):
+
+        """Analyzes a LoRaWAN PCAP file for LoRaWAN messages and performs basic analysis.
+
+        This function reads a PCAP file containing captured network traffic and extracts packets containing LoRaWAN messages. It iterates through each packet, printing a summary and attempting to decode it using the LoRa layer. Decoded LoRaWAN messages are analyzed based on their message type (Join Request, Join Accept, etc.). If session keys are available in the `SessionManager`, the function attempts to decrypt the payload of uplink messages.
+
+        Args:
+            file_path (str): The path to the PCAP file containing LoRaWAN messages.
+
+        Returns:
+            None
+        """
         packets = rdpcap(file_path)
 
         print(f"Total packets in pcap: {len(packets)}")
@@ -40,10 +52,22 @@ class Analyzer(CommandHandler):
                 except:
                     print("Packet could not be decoded")
 
-
     def get_packet_sequence_from_pcap(self, path):
+        """Extracts a sequence of LoRaWAN packets from a PCAP file.
+
+         Parses the provided PCAP file and extracts packets containing LoRaWAN messages. It returns a list of the extracted LoRaWAN message payloads in hexadecimal format.
+
+         Args:
+             pcap_path (str): The path to the PCAP file containing LoRaWAN messages.
+
+         Returns:
+             list[str]: A list of LoRaWAN message payloads extracted from the PCAP file, or an empty list if no LoRaWAN messages are found.
+
+         Raises:
+             ValueError: If the PCAP file cannot be opened or processed.
+         """
         packets = rdpcap(path)
-        indexes=self.session_manager.read_sequence_file()
+        indexes = self.session_manager.read_sequence_file()
         payloads = []
         for i in indexes:
             payloads.append(packets[i][UDP].load.hex())
@@ -51,6 +75,21 @@ class Analyzer(CommandHandler):
         return payloads
 
     def analyze_lora_packet(self, packet, raw_packet):
+        """Analyzes a decoded LoRaWAN message based on its message type.
+
+        This function takes a decoded LoRaWAN message object and the raw packet containing the message. It analyzes the message type (Join Request, Join Accept, etc.) and performs actions based on the type:
+
+        - For Join Request messages, it updates session parameters in the `SessionManager` with extracted values.
+        - For Join Accept messages, it attempts to decrypt the message if the AppKey is available. If successful, it derives session keys and updates the `SessionManager` with them.
+        - For uplink data messages (confirmed or unconfirmed), it attempts to decrypt the payload if the AppSKey is available. The decrypted payload is printed in hexadecimal and ASCII format.
+
+        Args:
+            packet (LoRa): The decoded LoRaWAN message object.
+            raw_packet (Packet): The raw packet containing the LoRaWAN message.
+
+        Returns:
+            None
+        """
         if packet.MType == MTypesEnum.join_request.bit_value:
             print('Found Join Request')
             self.session_manager.update_session_value(SessionParams.JoinRequest_AppEUI,
@@ -70,9 +109,11 @@ class Analyzer(CommandHandler):
                 print('Successfuly decrypted Join Accept messages')
                 print('Computing session keys')
                 self.session_manager.update_session_value(SessionParams.JoinAccept_AppNonce,
-                                                          format(decoded_join_accept.Join_Accept_Field[0].JoinAppNonce, '02x'))
+                                                          format(decoded_join_accept.Join_Accept_Field[0].JoinAppNonce,
+                                                                 '02x'))
                 self.session_manager.update_session_value(SessionParams.JoinAccept_JoinNonce,
-                                                          format(decoded_join_accept.Join_Accept_Field[0].JoinAppNonce, '02x'))
+                                                          format(decoded_join_accept.Join_Accept_Field[0].JoinAppNonce,
+                                                                 '02x'))
                 self.session_manager.update_session_value(SessionParams.JoinAccept_DevAddr,
                                                           decoded_join_accept.Join_Request_Field[0].DevAddr.hex())
                 self.session_manager.update_session_value(SessionParams.JoinAccept_NetID,
@@ -96,32 +137,55 @@ class Analyzer(CommandHandler):
             if self.session_manager.get_session_value(SessionParams.AppSKey) is not None:
                 print('Decrypting payload')
                 session_key = self.session_manager.get_session_value(SessionParams.AppSKey)
-                pt = self.crypto_tool.FRMPayload_decrypt(packet.ULDataPayload.hex(), packet.FCnt, session_key, self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr), 0)
+                pt = self.crypto_tool.FRMPayload_decrypt(packet.ULDataPayload.hex(), packet.FCnt, session_key,
+                                                         self.session_manager.get_session_value(
+                                                             SessionParams.JoinAccept_DevAddr), 0)
                 print(bytes(pt).hex(), bytes(pt).decode('iso-8859-1'))
         elif packet.MType == MTypesEnum.confirmed_data_up.bit_value:
             print('Found Confirmed Data Up')
             if self.session_manager.get_session_value(SessionParams.AppSKey) is not None:
                 print('Decrypting payload')
                 session_key = self.session_manager.get_session_value(SessionParams.AppSKey)
-                pt = self.crypto_tool.FRMPayload_decrypt(packet.ULDataPayload.hex(), packet.FCnt, session_key, self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr), 0)
+                pt = self.crypto_tool.FRMPayload_decrypt(packet.ULDataPayload.hex(), packet.FCnt, session_key,
+                                                         self.session_manager.get_session_value(
+                                                             SessionParams.JoinAccept_DevAddr), 0)
                 print(bytes(pt).hex(), bytes(pt).decode('iso-8859-1'))
         elif packet.MType == MTypesEnum.unconfirmed_data_down.bit_value:
             print('Found Unconfirmed Data Up')
             if self.session_manager.get_session_value(SessionParams.AppSKey) is not None:
                 print('Decrypting payload')
                 session_key = self.session_manager.get_session_value(SessionParams.AppSKey)
-                pt = self.crypto_tool.FRMPayload_decrypt(packet.DLDataPayload.hex(), packet.FCnt, session_key, self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr), 0)
+                pt = self.crypto_tool.FRMPayload_decrypt(packet.DLDataPayload.hex(), packet.FCnt, session_key,
+                                                         self.session_manager.get_session_value(
+                                                             SessionParams.JoinAccept_DevAddr), 0)
                 print(bytes(pt).hex(), bytes(pt).decode('iso-8859-1'))
         elif packet.MType == MTypesEnum.confirmed_data_down.bit_value:
             print('Found Confirmed Data Up')
             if self.session_manager.get_session_value(SessionParams.AppSKey) is not None:
                 print('Decrypting payload')
                 session_key = self.session_manager.get_session_value(SessionParams.AppSKey)
-                pt = self.crypto_tool.FRMPayload_decrypt(packet.DLDataPayload.hex(), packet.FCnt, session_key, self.session_manager.get_session_value(SessionParams.JoinAccept_DevAddr), 0)
+                pt = self.crypto_tool.FRMPayload_decrypt(packet.DLDataPayload.hex(), packet.FCnt, session_key,
+                                                         self.session_manager.get_session_value(
+                                                             SessionParams.JoinAccept_DevAddr), 0)
                 print(bytes(pt).hex(), bytes(pt).decode('iso-8859-1'))
 
-
     def packet_callback(self, packet):
+        """Callback function for live sniffing of packets.
+
+        This function is called for each captured packet during live sniffing with `sniff`. It checks if the packet is a UDP packet with the LoRaWAN port (40868) and attempts to:
+
+        - Append the packet to the internal list (`packets`).
+        - Decode the LoRaWAN message within the packet.
+        - Analyze the decoded message using `analyze_lora_packet`.
+
+        If the decoding fails, a message is printed.
+
+        Args:
+            packet (Packet): The captured network packet.
+
+        Returns:
+            None
+        """
         if packet.haslayer(UDP) and packet[UDP].dport == 40868:
             try:
                 self.packets.append(packet)
@@ -132,9 +196,26 @@ class Analyzer(CommandHandler):
                 print("Packet could not be decoded")
 
     def stop_filter_func(self, packet):
+        """Filter function used during live sniffing to stop capturing packets.
+
+        This function is used as a filter with `sniff` during live sniffing. It simply checks if the `stop_event` flag is set, indicating the user wants to stop capturing packets.
+
+        Args:
+            packet (Packet): The captured network packet (ignored).
+
+        Returns:
+            bool: True if the `stop_event` is set, False otherwise.
+        """
         return self.stop_event.is_set()
 
     def live_sniffing(self):
+        """Starts live sniffing for LoRaWAN packets on the loopback interface.
+
+        This function starts capturing packets on the loopback interface (lo) using `sniff` and the `packet_callback` function. Once capturing is stopped (using `stop_event`), it stores the captured packets to a PCAP file and optionally converts it to a Wireshark-readable format using the `bittwiste` tool.
+
+        Returns:
+            None
+        """
         print('sniffing...')
         sniff(iface="lo", prn=self.packet_callback, stop_filter=self.stop_filter_func)
         print('Storing pcap to file')
@@ -147,7 +228,14 @@ class Analyzer(CommandHandler):
         self.execute_command(command)
 
     def terminate_sniffer(self):
+        """Sets a flag to stop live sniffing.
+
+        This function sets the `stop_event` flag, which is used by the `stop_filter_func` to terminate live sniffing with `sniff`.
+
+        Returns: None
+
         self.stop_event.set()
+        """
 
 
 if __name__ == "__main__":

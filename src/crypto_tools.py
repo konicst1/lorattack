@@ -9,12 +9,38 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 class CryptoTool():
+    """Cryptographic toolset for LoRaWAN security operations.
+
+    This class provides functionalities for encryption, decryption, key derivation, and message integrity checking (MIC) used in LoRaWAN communication. It supports operations on Join Accept messages, session key derivation, and FRMPayload encryption/decryption for both uplink and downlink directions.
+    """
     def decrypt_join_accept(self, packet, appkey):
+        """Decrypts a Join Accept message using the provided AppKey.
+
+        This function takes a LoRaWAN Join Accept message (bytes) and the AppKey (bytes) as arguments. It removes the checksum and decrypts the payload using AES in ECB mode with the AppKey.
+
+        Args:
+            packet (bytes): The LoRaWAN Join Accept message to decrypt.
+            appkey (bytes): The AppKey used for decryption.
+
+        Returns:
+            bytes: The decrypted payload of the Join Accept message.
+        """
         payload = packet[4:-2]  # remove chcksum
         cipher = AES.new(appkey, AES.MODE_ECB)
         return cipher.encrypt(payload)
 
     def encrypt_join_accept(self, packet, appkey):
+        """Encrypts a Join Accept message using the provided AppKey.
+
+        This function takes a LoRaWAN Join Accept message (bytes) and the AppKey (bytes) as arguments. It decrypts the payload using AES in ECB mode with the AppKey and returns the decrypted message (without checksum).
+
+        Args:
+            packet (bytes): The LoRaWAN Join Accept message to encrypt.
+            appkey (bytes): The AppKey used for encryption.
+
+        Returns:
+            bytes: The encrypted payload of the Join Accept message (without checksum).
+        """
         payload = packet[4:]
         cipher = AES.new(appkey, AES.MODE_ECB)
         return cipher.decrypt(payload)
@@ -23,6 +49,20 @@ class CryptoTool():
         return binascii.unhexlify(hex_string)
 
     def __aes_encrypt(self, app_key, control_byte, app_nonce, net_id, dev_nonce):
+        """Encrypts data using AES in ECB mode with the AppKey.
+
+        This internal helper function takes the AppKey, control byte, AppNonce, NetID, and DevNonce as arguments. It constructs a data block, encrypts it using AES in ECB mode with the AppKey, and returns the encrypted data in hexadecimal format.
+
+        Args:
+            app_key (bytes): The AppKey used for encryption.
+            control_byte (int): The control byte for the operation.
+            app_nonce (str): The AppNonce value (hexadecimal string).
+            net_id (str): The NetID value (hexadecimal string).
+            dev_nonce (str): The DevNonce value (hexadecimal string).
+
+        Returns:
+            str: The encrypted data in hexadecimal format.
+        """
         key_bytes = self.hex_to_bytes(app_key)
         control_byte_bytes = bytes([control_byte])
         app_nonce_bytes = self.hex_to_bytes(app_nonce)
@@ -38,6 +78,26 @@ class CryptoTool():
 
 
     def derive_session_keys(self, app_key, nwk_key, join_eui, app_nonce, net_id, dev_nonce):
+        """Derives session keys for LoRaWAN communication.
+
+        This function takes the AppKey, NwkKey (assumed to be the same as AppKey for LoRaWANv1.0), JoinEUI, AppNonce, NetID, and DevNonce as arguments. It uses the `aes_encrypt` helper function to derive the following session keys:
+            - NwkSKey
+            - AppSKey
+            - FNwkSIntKey
+            - SNwkSIntKey
+            - NwkSEncKey
+
+        Args:
+            app_key (bytes): The AppKey used for key derivation.
+            nwk_key (bytes): The NwkKey (assumed to be the same as AppKey for LoRaWANv1.0).
+            join_eui (str): The JoinEUI value (hexadecimal string).
+            app_nonce (str): The AppNonce value (hexadecimal string).
+            net_id (str): The NetID value (hexadecimal string).
+            dev_nonce (str): The DevNonce value (hexadecimal string).
+
+        Returns:
+            tuple: A tuple containing the derived session keys (NwkSKey, AppSKey, FNwkSIntKey, SNwkSIntKey, NwkSEncKey).
+        """
         """AppNonce is equivalent to the JoinNonce. In case of LoRaWANv1.0, the app_key and nwk_key are the same, as well as AppEUI and JoinEUI"""
         nwk_skey = self.aes_encrypt(app_key, 0x01, app_nonce, net_id, dev_nonce)
         app_skey = self.aes_encrypt(app_key, 0x02, app_nonce, net_id, dev_nonce)
@@ -49,6 +109,17 @@ class CryptoTool():
         return nwk_skey, app_skey, FNwkSIntKey, SNwkSIntKey, NwkSEncKey
 
     def compute_MIC(self, key, data):
+        """Computes the Message Integrity Check (MIC) for a message.
+
+        This function takes a key (bytes) and data (bytes) as arguments. It uses the CMAC function with AES as the underlying cipher to compute the MIC value for the provided data. The MIC value is returned as a hexadecimal string representing the first 8 bytes of the CMAC output.
+
+        Args:
+            key (bytes): The secret key used for MIC calculation.
+            data (bytes): The data for which the MIC needs to be computed.
+
+        Returns:
+            str: The MIC value for the data in hexadecimal format (first 8 bytes of CMAC output).
+        """
         cobj = CMAC.new(key, ciphermod=AES)
         res = cobj.update(data).hexdigest()
         return res[0:8]

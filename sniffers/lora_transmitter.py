@@ -114,7 +114,7 @@ class LoRaTransmitter(gr.top_block, Qt.QWidget):
             samp_rate=samp_rate,
             sf=spreading_factor,
          ldro_mode=2,frame_zero_padd=1280 )
-        self.blocks_message_strobe_1 = blocks.message_strobe(pmt.intern(byte_data), 1000)
+        self.blocks_message_strobe_1 = blocks.message_strobe(pmt.intern(byte_data), 100)
         self.blocks_message_debug_0 = blocks.message_debug(True)
 
 
