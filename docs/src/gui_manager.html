@@ -1,0 +1,1226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>src.gui_manager API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.gui_manager</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from __future__ import annotations
+from src.player import Player
+from src.sniffer import Sniffer
+from src.session_manager import SessionManager
+from src.analyzer import Analyzer
+import urwid
+
+loop = None
+top = None
+
+
+class MenuButton(urwid.Button):
+    def __init__(self, caption, callback):
+        super().__init__(&#34;&#34;)
+        urwid.connect_signal(self, &#39;click&#39;, callback)
+        self._w = urwid.AttrMap(urwid.SelectableIcon(
+            [&#39;  \N{BULLET} &#39;, caption], 2), None, &#39;selected&#39;)
+
+
+class SubMenu(urwid.WidgetWrap):
+    def __init__(self, caption, choices):
+        super().__init__(MenuButton(
+            [caption, &#34;\N{HORIZONTAL ELLIPSIS}&#34;], self.open_menu))
+        line = urwid.Divider(&#39;\N{LOWER ONE QUARTER BLOCK}&#39;)
+        listbox = urwid.ListBox(urwid.SimpleFocusListWalker([
+                                                                urwid.AttrMap(urwid.Text([&#34;\n  &#34;, caption]), &#39;heading&#39;),
+                                                                urwid.AttrMap(line, &#39;line&#39;),
+                                                                urwid.Divider()] + choices + [urwid.Divider()]))
+        self.menu = urwid.AttrMap(listbox, &#39;options&#39;)
+
+    def open_menu(self, button):
+        top.open_box(self.menu)
+
+
+class Choice(urwid.WidgetWrap):
+    def __init__(self, caption, action=None, *args, **kwargs):
+        super().__init__(
+            MenuButton(caption, self.item_chosen))
+        self.caption = caption
+        self.action = action
+        self.args = args
+        self.kwargs = kwargs
+
+    def item_chosen(self, button):
+        if self.action:
+            self.action(*self.args, **self.kwargs)
+        else:
+            response = urwid.Text([&#39;  You chose &#39;, self.caption, &#39;\n&#39;])
+            done = MenuButton(&#39;Ok&#39;, exit_program)
+            response_box = urwid.Filler(urwid.Pile([response, done]))
+            top.open_box(urwid.AttrMap(response_box, &#39;options&#39;))
+
+
+def exit_program(key):
+    raise urwid.ExitMainLoop()
+
+
+def start_scanning(ifc, button=None):
+    global loop
+
+    loop.screen.stop()
+    # airmon_scan.run_airodump(ifc)
+    loop.screen.start()
+
+
+palette = [
+    (None, &#39;light gray&#39;, &#39;black&#39;),
+    (&#39;heading&#39;, &#39;black&#39;, &#39;light gray&#39;),
+    (&#39;line&#39;, &#39;black&#39;, &#39;light gray&#39;),
+    (&#39;options&#39;, &#39;dark gray&#39;, &#39;black&#39;),
+    (&#39;focus heading&#39;, &#39;white&#39;, &#39;dark red&#39;),
+    (&#39;focus line&#39;, &#39;black&#39;, &#39;dark red&#39;),
+    (&#39;focus options&#39;, &#39;black&#39;, &#39;light gray&#39;),
+    (&#39;selected&#39;, &#39;white&#39;, &#39;dark blue&#39;)]
+focus_map = {
+    &#39;heading&#39;: &#39;focus heading&#39;,
+    &#39;options&#39;: &#39;focus options&#39;,
+    &#39;line&#39;: &#39;focus line&#39;}
+
+
+class HorizontalBoxes(urwid.Columns):
+    def __init__(self):
+        super().__init__([], dividechars=1)
+
+    def open_box(self, box):
+        if self.contents:
+            del self.contents[self.focus_position + 1:]
+        self.contents.append((urwid.AttrMap(box, &#39;options&#39;, focus_map),
+                              self.options(&#39;given&#39;, 32)))
+        self.focus_position = len(self.contents) - 1
+
+
+class EnterReactEdit(urwid.Edit):
+    def __init__(self, *args, **kwargs):
+        self.on_enter = kwargs.pop(&#39;on_enter&#39;, None)  # Extract the on_enter callback if provided
+        super().__init__(*args, **kwargs)
+
+    def keypress(self, size, key):
+        if key == &#39;enter&#39;:
+            if self.on_enter:  # Check if the on_enter callback is provided and callable
+                self.on_enter(self.get_edit_text())
+            else:
+                # Default behavior for &#39;enter&#39; can be customized here if needed
+                pass
+        else:
+            return super().keypress(size, key)
+
+
+class GUIManager:
+    def __init__(self):
+        self.sniffer = Sniffer()
+        self.session_manager = SessionManager()
+        self.analyzer = Analyzer()
+        self.player = Player()
+        self.edit = EnterReactEdit(&#34;Enter name: &#34;, on_enter=self.on_change)
+
+        menu_top = SubMenu(&#39;LoRaWAN Tester&#39;, [
+            SubMenu(&#39;Session&#39;, [
+                SubMenu(&#39;New Session&#39;, [
+                    self.edit
+                ]),
+                SubMenu(&#39;Choose Session&#39;, [
+                    Choice(name, action=self.activate_session, text=name) for name in
+                    self.session_manager.list_sessions()
+                ]),
+
+            ]),
+            SubMenu(&#39;Sniffer&#39;, [
+                SubMenu(&#39;Sniff&#39;, [
+                    Choice(&#39;Sniff Up/Down link&#39;, action=self.sniff, path=self.sniffer.bisniff),
+                    Choice(&#39;Sniff Uplink&#39;, action=self.sniff, path=self.sniffer.upsniff),
+                    Choice(&#39;Sniff Downlink&#39;, action=self.sniff, path=self.sniffer.downsniff)
+                ]),
+                SubMenu(&#39;Configure&#39;, [
+                    Choice(&#39;Edit config/sniffer.config&#39;, action=self.sniffer.configure_sniffer)
+                ]),
+
+            ]),
+            SubMenu(&#39;Analyzer&#39;, [
+                Choice(name, action=self.analyze_pcap, pcap=name) for name in
+                self.session_manager.list_pcap_files()
+            ]),
+            SubMenu(&#39;Attack&#39;, [
+                SubMenu(&#39;Replay&#39;, [
+                    SubMenu(&#39;From pcap&#39;, [
+                        Choice(name, action=self.replay_sequence_from_pcap, pcap=name) for name in
+                        self.session_manager.list_pcap_files()
+                    ]),
+                    Choice(&#39;Edit replay sequence&#39;, action=self.edit_replay_sequence),
+                ]),
+                SubMenu(&#39;Craft Packets&#39;, [
+                    Choice(&#39;Spoof Join Request&#39;, action=self.player.spoof_JoinRequest),
+                    Choice(&#39;Spoof Join Accept&#39;, action=self.player.spoof_JoinAccept),
+                    Choice(&#39;Spoof ACK Message&#39;, action=self.player.spoof_ACK),
+                ]),
+                SubMenu(&#39;Jammer&#39;, [
+                    Choice(&#39;Jam&#39;, action=self.player.jam),
+                    Choice(&#39;Configure jammer&#39;, action=self.player.configure_jammer),
+                ]),
+                Choice(&#39;Configure transmitter&#39;, action=self.player.configure_transmitter),
+
+            ]),
+            Choice(&#39;Exit&#39;),
+        ])
+        global loop
+        global top
+        top = HorizontalBoxes()
+        top.open_box(menu_top.menu)
+        loop = urwid.MainLoop(urwid.Filler(top, &#39;middle&#39;, 20), palette)
+
+    def run(self):
+        loop.run()
+
+    def sniff(self, path):
+        global loop
+
+        loop.screen.stop()
+        self.sniffer.run_sniffer_thread(path)
+        loop.screen.start()
+
+    def on_change(self, text):
+        self.session_manager.create_session(text)
+        self.edit.set_edit_text(&#34;Session created&#34;)
+
+    def activate_session(self, text):
+        self.session_manager.activate_session(text)
+
+    def edit_replay_sequence(self):
+        global loop
+
+        loop.screen.stop()
+        self.session_manager.manage_sequence_file()
+        loop.screen.start()
+
+    def analyze_pcap(self, pcap):
+        path = self.session_manager.sessions_dir + &#39;/&#39; + self.session_manager.get_current_session_name() + &#39;/&#39; + pcap
+        self.analyzer.analyze_pcap(path)
+
+    def replay_sequence_from_pcap(self, pcap):
+        global loop
+
+        loop.screen.stop()
+        path = self.session_manager.sessions_dir + &#39;/&#39; + self.session_manager.get_current_session_name() + &#39;/&#39; + pcap
+        self.player.replay_sequence_from_pcap(path)
+        loop.screen.start()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="src.gui_manager.exit_program"><code class="name flex">
+<span>def <span class="ident">exit_program</span></span>(<span>key)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def exit_program(key):
+    raise urwid.ExitMainLoop()</code></pre>
+</details>
+</dd>
+<dt id="src.gui_manager.start_scanning"><code class="name flex">
+<span>def <span class="ident">start_scanning</span></span>(<span>ifc, button=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_scanning(ifc, button=None):
+    global loop
+
+    loop.screen.stop()
+    # airmon_scan.run_airodump(ifc)
+    loop.screen.start()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.gui_manager.Choice"><code class="flex name class">
+<span>class <span class="ident">Choice</span></span>
+<span>(</span><span>caption, action=None, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Widget base class</p>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_selectable</p>
+<p>:annotation: = False</p>
+<p>The default :meth:<code>.selectable</code> method returns this value.</p>
+</div>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_sizing</p>
+<p>:annotation: = frozenset(['flow', 'box', 'fixed'])</p>
+<p>The default :meth:<code>.sizing</code> method returns this value.</p>
+</div>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_command_map</p>
+<p>:annotation: = urwid.command_map</p>
+<p>A shared :class:<code>CommandMap</code> instance. May be redefined in subclasses or widget instances.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;rows(size, focus=False)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but
+must be implemented by any flow widget.
+See :meth:<code>.sizing</code>.</p>
+</div>
+<p>See :meth:<code>Widget.render</code> for parameter details.</p>
+<p>:returns: The number of rows required for this widget given a number of columns in <em>size</em></p>
+<p>This is the method flow widgets use to communicate their size to other
+widgets without having to render a canvas. This should be a quick
+calculation as this function may be called a number of times in normal
+operation. If your implementation may take a long time you should add
+your own caching here.</p>
+<p>There is some metaclass magic defined in the :class:<code>Widget</code>
+metaclass :class:<code>WidgetMeta</code> that causes the
+result of this function to be retrieved from any
+canvas cached by :class:<code>CanvasCache</code>, so if your widget
+has been rendered you may not receive calls to this function. The class
+variable :attr:<code>ignore_focus</code> may be defined and set to <code>True</code> if this
+widget renders the same size regardless of the value of the <em>focus</em>
+parameter.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;get_cursor_coords(size)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but
+must be implemented by any widget that may return cursor
+coordinates as part of the canvas that :meth:<code>render</code> returns.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size</p>
+<p>:returns: (<em>col</em>, <em>row</em>) if this widget has a cursor, <code>None</code> otherwise</p>
+<p>Return the cursor coordinates (<em>col</em>, <em>row</em>) of a cursor that will appear
+as part of the canvas rendered by this widget when in focus, or <code>None</code>
+if no cursor is displayed.</p>
+<p>The :class:<code>ListBox</code> widget
+uses this method to make sure a cursor in the focus widget is not scrolled out of view.
+It is a separate method to avoid having to render the whole widget while calculating layout.</p>
+<p>Container widgets will typically call the :meth:<code>.get_cursor_coords</code> method on their focus widget.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;get_pref_col(size)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but may be implemented by a subclass.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size</p>
+<p>:returns: a column number or <code>'left'</code> for the leftmost available
+column or <code>'right'</code> for the rightmost available column</p>
+<p>Return the preferred column for the cursor to be displayed in this
+widget. This value might not be the same as the column returned from
+:meth:<code>get_cursor_coords</code>.</p>
+<p>The :class:<code>ListBox</code> and :class:<code>Pile</code>
+widgets call this method on a widget losing focus and use the value
+returned to call :meth:<code>.move_cursor_to_coords</code> on the widget becoming
+the focus. This allows the focus to move up and down through widgets
+while keeping the cursor in approximately the same column on screen.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;move_cursor_to_coords(size, col, row)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but may be implemented by a subclass.
+Not implementing this method is equivalent to having a method that always returns
+<code>False</code>.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size
+:param col: new column for the cursor, 0 is the left edge of this widget
+:type col: int
+:param row: new row for the cursor, 0 it the top row of this widget
+:type row: int</p>
+<p>:returns: <code>True</code> if the position was set successfully anywhere on <em>row</em>, <code>False</code> otherwise</p>
+</div>
+<p>w &ndash; widget to wrap, stored as self._w</p>
+<p>This object will pass the functions defined in Widget interface
+definition to self._w.</p>
+<p>The purpose of this widget is to provide a base class for
+widgets that compose other widgets for their display and
+behaviour.
+The details of that composition should not affect
+users of the subclass.
+The subclass may decide to expose some
+of the wrapped widgets by behaving like a ContainerWidget or
+WidgetDecoration, or it may hide them from outside access.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Choice(urwid.WidgetWrap):
+    def __init__(self, caption, action=None, *args, **kwargs):
+        super().__init__(
+            MenuButton(caption, self.item_chosen))
+        self.caption = caption
+        self.action = action
+        self.args = args
+        self.kwargs = kwargs
+
+    def item_chosen(self, button):
+        if self.action:
+            self.action(*self.args, **self.kwargs)
+        else:
+            response = urwid.Text([&#39;  You chose &#39;, self.caption, &#39;\n&#39;])
+            done = MenuButton(&#39;Ok&#39;, exit_program)
+            response_box = urwid.Filler(urwid.Pile([response, done]))
+            top.open_box(urwid.AttrMap(response_box, &#39;options&#39;))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>urwid.widget.widget.WidgetWrap</li>
+<li>urwid.widget.widget.delegate_to_widget_mixin.<locals>.DelegateToWidgetMixin</li>
+<li>urwid.widget.widget.Widget</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="src.gui_manager.Choice.item_chosen"><code class="name flex">
+<span>def <span class="ident">item_chosen</span></span>(<span>self, button)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def item_chosen(self, button):
+    if self.action:
+        self.action(*self.args, **self.kwargs)
+    else:
+        response = urwid.Text([&#39;  You chose &#39;, self.caption, &#39;\n&#39;])
+        done = MenuButton(&#39;Ok&#39;, exit_program)
+        response_box = urwid.Filler(urwid.Pile([response, done]))
+        top.open_box(urwid.AttrMap(response_box, &#39;options&#39;))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="src.gui_manager.EnterReactEdit"><code class="flex name class">
+<span>class <span class="ident">EnterReactEdit</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Text editing widget implements cursor movement, text insertion and
+deletion.
+A caption may prefix the editing area.
+Uses text class
+for text layout.</p>
+<p>Users of this class may listen for <code>"change"</code> or <code>"postchange"</code>
+events.
+See :func:<code>connect_signal</code>.</p>
+<ul>
+<li><code>"change"</code> is sent just before the value of edit_text changes.
+It receives the new text as an argument.
+Note that <code>"change"</code> cannot
+change the text in question as edit_text changes the text afterwards.</li>
+<li><code>"postchange"</code> is sent after the value of edit_text changes.
+It receives the old value of the text as an argument and thus is
+appropriate for changing the text.
+It is possible for a <code>"postchange"</code>
+event handler to get into a loop of changing the text and then being
+called when the event is re-emitted.
+It is up to the event
+handler to guard against this case (for instance, by not changing the
+text if it is signaled for text that it has already changed once).</li>
+</ul>
+<p>:param caption: markup for caption preceding edit_text, see
+:class:<code>Text</code> for description of text markup.
+:type caption: text markup
+:param edit_text: initial text for editing, type (bytes or unicode)
+must match the text in the caption
+:type edit_text: bytes or unicode
+:param multiline: True: 'enter' inserts newline
+False: return it
+:type multiline: bool
+:param align: typically 'left', 'center' or 'right'
+:type align: text alignment mode
+:param wrap: typically 'space', 'any' or 'clip'
+:type wrap: text wrapping mode
+:param allow_tab: True: 'tab' inserts 1-8 spaces
+False: return it
+:type allow_tab: bool
+:param edit_pos: initial position for cursor, None:end of edit_text
+:type edit_pos: int
+:param layout: defaults to a shared :class:<code>StandardTextLayout</code> instance
+:type layout: text layout instance
+:param mask: hide text entered with this character, None:disable mask
+:type mask: bytes or unicode</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; Edit()
+&lt;Edit selectable flow widget '' edit_pos=0&gt;
+&gt;&gt;&gt; Edit(u&quot;Y/n? &quot;, u&quot;yes&quot;)
+&lt;Edit selectable flow widget 'yes' caption='Y/n? ' edit_pos=3&gt;
+&gt;&gt;&gt; Edit(u&quot;Name &quot;, u&quot;Smith&quot;, edit_pos=1)
+&lt;Edit selectable flow widget 'Smith' caption='Name ' edit_pos=1&gt;
+&gt;&gt;&gt; Edit(u&quot;&quot;, u&quot;3.14&quot;, align='right')
+&lt;Edit selectable flow widget '3.14' align='right' edit_pos=4&gt;
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EnterReactEdit(urwid.Edit):
+    def __init__(self, *args, **kwargs):
+        self.on_enter = kwargs.pop(&#39;on_enter&#39;, None)  # Extract the on_enter callback if provided
+        super().__init__(*args, **kwargs)
+
+    def keypress(self, size, key):
+        if key == &#39;enter&#39;:
+            if self.on_enter:  # Check if the on_enter callback is provided and callable
+                self.on_enter(self.get_edit_text())
+            else:
+                # Default behavior for &#39;enter&#39; can be customized here if needed
+                pass
+        else:
+            return super().keypress(size, key)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>urwid.widget.edit.Edit</li>
+<li>urwid.widget.text.Text</li>
+<li>urwid.widget.widget.Widget</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="src.gui_manager.EnterReactEdit.keypress"><code class="name flex">
+<span>def <span class="ident">keypress</span></span>(<span>self, size, key)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Handle editing keystrokes, return others.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; e, size = Edit(), (20,)
+&gt;&gt;&gt; e.keypress(size, 'x')
+&gt;&gt;&gt; e.keypress(size, 'left')
+&gt;&gt;&gt; e.keypress(size, '1')
+&gt;&gt;&gt; print(e.edit_text)
+1x
+&gt;&gt;&gt; e.keypress(size, 'backspace')
+&gt;&gt;&gt; e.keypress(size, 'end')
+&gt;&gt;&gt; e.keypress(size, '2')
+&gt;&gt;&gt; print(e.edit_text)
+x2
+&gt;&gt;&gt; e.keypress(size, 'shift f1')
+'shift f1'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keypress(self, size, key):
+    if key == &#39;enter&#39;:
+        if self.on_enter:  # Check if the on_enter callback is provided and callable
+            self.on_enter(self.get_edit_text())
+        else:
+            # Default behavior for &#39;enter&#39; can be customized here if needed
+            pass
+    else:
+        return super().keypress(size, key)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="src.gui_manager.GUIManager"><code class="flex name class">
+<span>class <span class="ident">GUIManager</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GUIManager:
+    def __init__(self):
+        self.sniffer = Sniffer()
+        self.session_manager = SessionManager()
+        self.analyzer = Analyzer()
+        self.player = Player()
+        self.edit = EnterReactEdit(&#34;Enter name: &#34;, on_enter=self.on_change)
+
+        menu_top = SubMenu(&#39;LoRaWAN Tester&#39;, [
+            SubMenu(&#39;Session&#39;, [
+                SubMenu(&#39;New Session&#39;, [
+                    self.edit
+                ]),
+                SubMenu(&#39;Choose Session&#39;, [
+                    Choice(name, action=self.activate_session, text=name) for name in
+                    self.session_manager.list_sessions()
+                ]),
+
+            ]),
+            SubMenu(&#39;Sniffer&#39;, [
+                SubMenu(&#39;Sniff&#39;, [
+                    Choice(&#39;Sniff Up/Down link&#39;, action=self.sniff, path=self.sniffer.bisniff),
+                    Choice(&#39;Sniff Uplink&#39;, action=self.sniff, path=self.sniffer.upsniff),
+                    Choice(&#39;Sniff Downlink&#39;, action=self.sniff, path=self.sniffer.downsniff)
+                ]),
+                SubMenu(&#39;Configure&#39;, [
+                    Choice(&#39;Edit config/sniffer.config&#39;, action=self.sniffer.configure_sniffer)
+                ]),
+
+            ]),
+            SubMenu(&#39;Analyzer&#39;, [
+                Choice(name, action=self.analyze_pcap, pcap=name) for name in
+                self.session_manager.list_pcap_files()
+            ]),
+            SubMenu(&#39;Attack&#39;, [
+                SubMenu(&#39;Replay&#39;, [
+                    SubMenu(&#39;From pcap&#39;, [
+                        Choice(name, action=self.replay_sequence_from_pcap, pcap=name) for name in
+                        self.session_manager.list_pcap_files()
+                    ]),
+                    Choice(&#39;Edit replay sequence&#39;, action=self.edit_replay_sequence),
+                ]),
+                SubMenu(&#39;Craft Packets&#39;, [
+                    Choice(&#39;Spoof Join Request&#39;, action=self.player.spoof_JoinRequest),
+                    Choice(&#39;Spoof Join Accept&#39;, action=self.player.spoof_JoinAccept),
+                    Choice(&#39;Spoof ACK Message&#39;, action=self.player.spoof_ACK),
+                ]),
+                SubMenu(&#39;Jammer&#39;, [
+                    Choice(&#39;Jam&#39;, action=self.player.jam),
+                    Choice(&#39;Configure jammer&#39;, action=self.player.configure_jammer),
+                ]),
+                Choice(&#39;Configure transmitter&#39;, action=self.player.configure_transmitter),
+
+            ]),
+            Choice(&#39;Exit&#39;),
+        ])
+        global loop
+        global top
+        top = HorizontalBoxes()
+        top.open_box(menu_top.menu)
+        loop = urwid.MainLoop(urwid.Filler(top, &#39;middle&#39;, 20), palette)
+
+    def run(self):
+        loop.run()
+
+    def sniff(self, path):
+        global loop
+
+        loop.screen.stop()
+        self.sniffer.run_sniffer_thread(path)
+        loop.screen.start()
+
+    def on_change(self, text):
+        self.session_manager.create_session(text)
+        self.edit.set_edit_text(&#34;Session created&#34;)
+
+    def activate_session(self, text):
+        self.session_manager.activate_session(text)
+
+    def edit_replay_sequence(self):
+        global loop
+
+        loop.screen.stop()
+        self.session_manager.manage_sequence_file()
+        loop.screen.start()
+
+    def analyze_pcap(self, pcap):
+        path = self.session_manager.sessions_dir + &#39;/&#39; + self.session_manager.get_current_session_name() + &#39;/&#39; + pcap
+        self.analyzer.analyze_pcap(path)
+
+    def replay_sequence_from_pcap(self, pcap):
+        global loop
+
+        loop.screen.stop()
+        path = self.session_manager.sessions_dir + &#39;/&#39; + self.session_manager.get_current_session_name() + &#39;/&#39; + pcap
+        self.player.replay_sequence_from_pcap(path)
+        loop.screen.start()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="src.gui_manager.GUIManager.activate_session"><code class="name flex">
+<span>def <span class="ident">activate_session</span></span>(<span>self, text)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate_session(self, text):
+    self.session_manager.activate_session(text)</code></pre>
+</details>
+</dd>
+<dt id="src.gui_manager.GUIManager.analyze_pcap"><code class="name flex">
+<span>def <span class="ident">analyze_pcap</span></span>(<span>self, pcap)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def analyze_pcap(self, pcap):
+    path = self.session_manager.sessions_dir + &#39;/&#39; + self.session_manager.get_current_session_name() + &#39;/&#39; + pcap
+    self.analyzer.analyze_pcap(path)</code></pre>
+</details>
+</dd>
+<dt id="src.gui_manager.GUIManager.edit_replay_sequence"><code class="name flex">
+<span>def <span class="ident">edit_replay_sequence</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def edit_replay_sequence(self):
+    global loop
+
+    loop.screen.stop()
+    self.session_manager.manage_sequence_file()
+    loop.screen.start()</code></pre>
+</details>
+</dd>
+<dt id="src.gui_manager.GUIManager.on_change"><code class="name flex">
+<span>def <span class="ident">on_change</span></span>(<span>self, text)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def on_change(self, text):
+    self.session_manager.create_session(text)
+    self.edit.set_edit_text(&#34;Session created&#34;)</code></pre>
+</details>
+</dd>
+<dt id="src.gui_manager.GUIManager.replay_sequence_from_pcap"><code class="name flex">
+<span>def <span class="ident">replay_sequence_from_pcap</span></span>(<span>self, pcap)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def replay_sequence_from_pcap(self, pcap):
+    global loop
+
+    loop.screen.stop()
+    path = self.session_manager.sessions_dir + &#39;/&#39; + self.session_manager.get_current_session_name() + &#39;/&#39; + pcap
+    self.player.replay_sequence_from_pcap(path)
+    loop.screen.start()</code></pre>
+</details>
+</dd>
+<dt id="src.gui_manager.GUIManager.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self):
+    loop.run()</code></pre>
+</details>
+</dd>
+<dt id="src.gui_manager.GUIManager.sniff"><code class="name flex">
+<span>def <span class="ident">sniff</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sniff(self, path):
+    global loop
+
+    loop.screen.stop()
+    self.sniffer.run_sniffer_thread(path)
+    loop.screen.start()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="src.gui_manager.HorizontalBoxes"><code class="flex name class">
+<span>class <span class="ident">HorizontalBoxes</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Widgets arranged horizontally in columns from left to right</p>
+<p>:param widget_list: iterable of flow or box widgets
+:param dividechars: number of blank characters between columns
+:param focus_column: index into widget_list of column in focus or focused widget instance,
+if <code>None</code> the first selectable widget will be chosen.
+:param min_width: minimum width for each column which is not
+calling widget.pack() in <em>widget_list</em>.
+:param box_columns: a list of column indexes containing box widgets
+whose height is set to the maximum of the rows
+required by columns not listed in <em>box_columns</em>.</p>
+<p><em>widget_list</em> may also contain tuples such as:</p>
+<p>(<em>given_width</em>, <em>widget</em>)
+make this column <em>given_width</em> screen columns wide, where <em>given_width</em> is an int
+(<code>'pack'</code>, <em>widget</em>)
+call :meth:<code>pack() &lt;Widget.pack&gt;</code> to calculate the width of this column
+(<code>'weight'</code>, <em>weight</em>, <em>widget</em>)
+give this column a relative <em>weight</em> (number) to calculate its width from th screen columns remaining</p>
+<p>Widgets not in a tuple are the same as (<code>'weight'</code>, <code>1</code>, <em>widget</em>)</p>
+<p>If the Columns widget is treated as a box widget then all children
+are treated as box widgets, and <em>box_columns</em> is ignored.</p>
+<p>If the Columns widget is treated as a flow widget then the rows
+are calculated as the largest rows() returned from all columns
+except the ones listed in <em>box_columns</em>.
+The box widgets in
+<em>box_columns</em> will be displayed with this calculated number of rows,
+filling the full height.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HorizontalBoxes(urwid.Columns):
+    def __init__(self):
+        super().__init__([], dividechars=1)
+
+    def open_box(self, box):
+        if self.contents:
+            del self.contents[self.focus_position + 1:]
+        self.contents.append((urwid.AttrMap(box, &#39;options&#39;, focus_map),
+                              self.options(&#39;given&#39;, 32)))
+        self.focus_position = len(self.contents) - 1</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>urwid.widget.columns.Columns</li>
+<li>urwid.widget.widget.Widget</li>
+<li>urwid.widget.container.WidgetContainerMixin</li>
+<li>urwid.widget.container.WidgetContainerListContentsMixin</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="src.gui_manager.HorizontalBoxes.open_box"><code class="name flex">
+<span>def <span class="ident">open_box</span></span>(<span>self, box)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def open_box(self, box):
+    if self.contents:
+        del self.contents[self.focus_position + 1:]
+    self.contents.append((urwid.AttrMap(box, &#39;options&#39;, focus_map),
+                          self.options(&#39;given&#39;, 32)))
+    self.focus_position = len(self.contents) - 1</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="src.gui_manager.MenuButton"><code class="flex name class">
+<span>class <span class="ident">MenuButton</span></span>
+<span>(</span><span>caption, callback)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Widget base class</p>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_selectable</p>
+<p>:annotation: = False</p>
+<p>The default :meth:<code>.selectable</code> method returns this value.</p>
+</div>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_sizing</p>
+<p>:annotation: = frozenset(['flow', 'box', 'fixed'])</p>
+<p>The default :meth:<code>.sizing</code> method returns this value.</p>
+</div>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_command_map</p>
+<p>:annotation: = urwid.command_map</p>
+<p>A shared :class:<code>CommandMap</code> instance. May be redefined in subclasses or widget instances.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;rows(size, focus=False)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but
+must be implemented by any flow widget.
+See :meth:<code>.sizing</code>.</p>
+</div>
+<p>See :meth:<code>Widget.render</code> for parameter details.</p>
+<p>:returns: The number of rows required for this widget given a number of columns in <em>size</em></p>
+<p>This is the method flow widgets use to communicate their size to other
+widgets without having to render a canvas. This should be a quick
+calculation as this function may be called a number of times in normal
+operation. If your implementation may take a long time you should add
+your own caching here.</p>
+<p>There is some metaclass magic defined in the :class:<code>Widget</code>
+metaclass :class:<code>WidgetMeta</code> that causes the
+result of this function to be retrieved from any
+canvas cached by :class:<code>CanvasCache</code>, so if your widget
+has been rendered you may not receive calls to this function. The class
+variable :attr:<code>ignore_focus</code> may be defined and set to <code>True</code> if this
+widget renders the same size regardless of the value of the <em>focus</em>
+parameter.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;get_cursor_coords(size)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but
+must be implemented by any widget that may return cursor
+coordinates as part of the canvas that :meth:<code>render</code> returns.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size</p>
+<p>:returns: (<em>col</em>, <em>row</em>) if this widget has a cursor, <code>None</code> otherwise</p>
+<p>Return the cursor coordinates (<em>col</em>, <em>row</em>) of a cursor that will appear
+as part of the canvas rendered by this widget when in focus, or <code>None</code>
+if no cursor is displayed.</p>
+<p>The :class:<code>ListBox</code> widget
+uses this method to make sure a cursor in the focus widget is not scrolled out of view.
+It is a separate method to avoid having to render the whole widget while calculating layout.</p>
+<p>Container widgets will typically call the :meth:<code>.get_cursor_coords</code> method on their focus widget.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;get_pref_col(size)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but may be implemented by a subclass.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size</p>
+<p>:returns: a column number or <code>'left'</code> for the leftmost available
+column or <code>'right'</code> for the rightmost available column</p>
+<p>Return the preferred column for the cursor to be displayed in this
+widget. This value might not be the same as the column returned from
+:meth:<code>get_cursor_coords</code>.</p>
+<p>The :class:<code>ListBox</code> and :class:<code>Pile</code>
+widgets call this method on a widget losing focus and use the value
+returned to call :meth:<code>.move_cursor_to_coords</code> on the widget becoming
+the focus. This allows the focus to move up and down through widgets
+while keeping the cursor in approximately the same column on screen.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;move_cursor_to_coords(size, col, row)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but may be implemented by a subclass.
+Not implementing this method is equivalent to having a method that always returns
+<code>False</code>.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size
+:param col: new column for the cursor, 0 is the left edge of this widget
+:type col: int
+:param row: new row for the cursor, 0 it the top row of this widget
+:type row: int</p>
+<p>:returns: <code>True</code> if the position was set successfully anywhere on <em>row</em>, <code>False</code> otherwise</p>
+</div>
+<p>:param label: markup for button label
+:param on_press: shorthand for connect_signal()
+function call for a single callback
+:param user_data: user_data for on_press
+:param align: typically <code>'left'</code>, <code>'center'</code> or <code>'right'</code>
+:type align: label alignment mode
+:param wrap: typically <code>'space'</code>, <code>'any'</code>, <code>'clip'</code> or <code>'ellipsis'</code>
+:type wrap: label wrapping mode
+:param layout: defaults to a shared :class:<code>StandardTextLayout</code> instance
+:type layout: text layout instance</p>
+<div class="admonition note">
+<p class="admonition-title">Note:&ensp;<code>pack</code> method expect, that <code>Columns</code> backend widget is not modified from outside</p>
+</div>
+<p>Signals supported: <code>'click'</code></p>
+<p>Register signal handler with::</p>
+<p>urwid.connect_signal(button, 'click', callback, user_data)</p>
+<p>where callback is callback(button [,user_data])
+Unregister signal handlers with::</p>
+<p>urwid.disconnect_signal(button, 'click', callback, user_data)</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from urwid.util import set_temporary_encoding
+&gt;&gt;&gt; Button(u&quot;Ok&quot;)
+&lt;Button selectable fixed/flow widget 'Ok'&gt;
+&gt;&gt;&gt; b = Button(&quot;Cancel&quot;)
+&gt;&gt;&gt; b.render((15,), focus=True).text # ... = b in Python 3
+[b'&lt; Cancel      &gt;']
+&gt;&gt;&gt; aligned_button = Button(&quot;Test&quot;, align=Align.CENTER)
+&gt;&gt;&gt; aligned_button.render((10,), focus=True).text
+[b'&lt;  Test  &gt;']
+&gt;&gt;&gt; wrapped_button = Button(&quot;Long label&quot;, wrap=WrapMode.ELLIPSIS)
+&gt;&gt;&gt; with set_temporary_encoding(&quot;utf-8&quot;):
+...     wrapped_button.render((7,), focus=False).text[0].decode('utf-8')
+'&lt; Lo… &gt;'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MenuButton(urwid.Button):
+    def __init__(self, caption, callback):
+        super().__init__(&#34;&#34;)
+        urwid.connect_signal(self, &#39;click&#39;, callback)
+        self._w = urwid.AttrMap(urwid.SelectableIcon(
+            [&#39;  \N{BULLET} &#39;, caption], 2), None, &#39;selected&#39;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>urwid.widget.wimp.Button</li>
+<li>urwid.widget.widget.WidgetWrap</li>
+<li>urwid.widget.widget.delegate_to_widget_mixin.<locals>.DelegateToWidgetMixin</li>
+<li>urwid.widget.widget.Widget</li>
+<li>typing.Generic</li>
+</ul>
+</dd>
+<dt id="src.gui_manager.SubMenu"><code class="flex name class">
+<span>class <span class="ident">SubMenu</span></span>
+<span>(</span><span>caption, choices)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Widget base class</p>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_selectable</p>
+<p>:annotation: = False</p>
+<p>The default :meth:<code>.selectable</code> method returns this value.</p>
+</div>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_sizing</p>
+<p>:annotation: = frozenset(['flow', 'box', 'fixed'])</p>
+<p>The default :meth:<code>.sizing</code> method returns this value.</p>
+</div>
+<div class="admonition attribute">
+<p class="admonition-title">Attribute:&ensp;_command_map</p>
+<p>:annotation: = urwid.command_map</p>
+<p>A shared :class:<code>CommandMap</code> instance. May be redefined in subclasses or widget instances.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;rows(size, focus=False)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but
+must be implemented by any flow widget.
+See :meth:<code>.sizing</code>.</p>
+</div>
+<p>See :meth:<code>Widget.render</code> for parameter details.</p>
+<p>:returns: The number of rows required for this widget given a number of columns in <em>size</em></p>
+<p>This is the method flow widgets use to communicate their size to other
+widgets without having to render a canvas. This should be a quick
+calculation as this function may be called a number of times in normal
+operation. If your implementation may take a long time you should add
+your own caching here.</p>
+<p>There is some metaclass magic defined in the :class:<code>Widget</code>
+metaclass :class:<code>WidgetMeta</code> that causes the
+result of this function to be retrieved from any
+canvas cached by :class:<code>CanvasCache</code>, so if your widget
+has been rendered you may not receive calls to this function. The class
+variable :attr:<code>ignore_focus</code> may be defined and set to <code>True</code> if this
+widget renders the same size regardless of the value of the <em>focus</em>
+parameter.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;get_cursor_coords(size)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but
+must be implemented by any widget that may return cursor
+coordinates as part of the canvas that :meth:<code>render</code> returns.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size</p>
+<p>:returns: (<em>col</em>, <em>row</em>) if this widget has a cursor, <code>None</code> otherwise</p>
+<p>Return the cursor coordinates (<em>col</em>, <em>row</em>) of a cursor that will appear
+as part of the canvas rendered by this widget when in focus, or <code>None</code>
+if no cursor is displayed.</p>
+<p>The :class:<code>ListBox</code> widget
+uses this method to make sure a cursor in the focus widget is not scrolled out of view.
+It is a separate method to avoid having to render the whole widget while calculating layout.</p>
+<p>Container widgets will typically call the :meth:<code>.get_cursor_coords</code> method on their focus widget.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;get_pref_col(size)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but may be implemented by a subclass.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size</p>
+<p>:returns: a column number or <code>'left'</code> for the leftmost available
+column or <code>'right'</code> for the rightmost available column</p>
+<p>Return the preferred column for the cursor to be displayed in this
+widget. This value might not be the same as the column returned from
+:meth:<code>get_cursor_coords</code>.</p>
+<p>The :class:<code>ListBox</code> and :class:<code>Pile</code>
+widgets call this method on a widget losing focus and use the value
+returned to call :meth:<code>.move_cursor_to_coords</code> on the widget becoming
+the focus. This allows the focus to move up and down through widgets
+while keeping the cursor in approximately the same column on screen.</p>
+</div>
+<div class="admonition method">
+<p class="admonition-title">Method:&ensp;move_cursor_to_coords(size, col, row)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not implemented in :class:<code>.Widget</code> but may be implemented by a subclass.
+Not implementing this method is equivalent to having a method that always returns
+<code>False</code>.</p>
+</div>
+<p>:param size: See :meth:<code>Widget.render</code> for details.
+:type size: widget size
+:param col: new column for the cursor, 0 is the left edge of this widget
+:type col: int
+:param row: new row for the cursor, 0 it the top row of this widget
+:type row: int</p>
+<p>:returns: <code>True</code> if the position was set successfully anywhere on <em>row</em>, <code>False</code> otherwise</p>
+</div>
+<p>w &ndash; widget to wrap, stored as self._w</p>
+<p>This object will pass the functions defined in Widget interface
+definition to self._w.</p>
+<p>The purpose of this widget is to provide a base class for
+widgets that compose other widgets for their display and
+behaviour.
+The details of that composition should not affect
+users of the subclass.
+The subclass may decide to expose some
+of the wrapped widgets by behaving like a ContainerWidget or
+WidgetDecoration, or it may hide them from outside access.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SubMenu(urwid.WidgetWrap):
+    def __init__(self, caption, choices):
+        super().__init__(MenuButton(
+            [caption, &#34;\N{HORIZONTAL ELLIPSIS}&#34;], self.open_menu))
+        line = urwid.Divider(&#39;\N{LOWER ONE QUARTER BLOCK}&#39;)
+        listbox = urwid.ListBox(urwid.SimpleFocusListWalker([
+                                                                urwid.AttrMap(urwid.Text([&#34;\n  &#34;, caption]), &#39;heading&#39;),
+                                                                urwid.AttrMap(line, &#39;line&#39;),
+                                                                urwid.Divider()] + choices + [urwid.Divider()]))
+        self.menu = urwid.AttrMap(listbox, &#39;options&#39;)
+
+    def open_menu(self, button):
+        top.open_box(self.menu)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>urwid.widget.widget.WidgetWrap</li>
+<li>urwid.widget.widget.delegate_to_widget_mixin.<locals>.DelegateToWidgetMixin</li>
+<li>urwid.widget.widget.Widget</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="src.gui_manager.SubMenu.open_menu"><code class="name flex">
+<span>def <span class="ident">open_menu</span></span>(<span>self, button)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def open_menu(self, button):
+    top.open_box(self.menu)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="src.gui_manager.exit_program" href="#src.gui_manager.exit_program">exit_program</a></code></li>
+<li><code><a title="src.gui_manager.start_scanning" href="#src.gui_manager.start_scanning">start_scanning</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.gui_manager.Choice" href="#src.gui_manager.Choice">Choice</a></code></h4>
+<ul class="">
+<li><code><a title="src.gui_manager.Choice.item_chosen" href="#src.gui_manager.Choice.item_chosen">item_chosen</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.gui_manager.EnterReactEdit" href="#src.gui_manager.EnterReactEdit">EnterReactEdit</a></code></h4>
+<ul class="">
+<li><code><a title="src.gui_manager.EnterReactEdit.keypress" href="#src.gui_manager.EnterReactEdit.keypress">keypress</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.gui_manager.GUIManager" href="#src.gui_manager.GUIManager">GUIManager</a></code></h4>
+<ul class="">
+<li><code><a title="src.gui_manager.GUIManager.activate_session" href="#src.gui_manager.GUIManager.activate_session">activate_session</a></code></li>
+<li><code><a title="src.gui_manager.GUIManager.analyze_pcap" href="#src.gui_manager.GUIManager.analyze_pcap">analyze_pcap</a></code></li>
+<li><code><a title="src.gui_manager.GUIManager.edit_replay_sequence" href="#src.gui_manager.GUIManager.edit_replay_sequence">edit_replay_sequence</a></code></li>
+<li><code><a title="src.gui_manager.GUIManager.on_change" href="#src.gui_manager.GUIManager.on_change">on_change</a></code></li>
+<li><code><a title="src.gui_manager.GUIManager.replay_sequence_from_pcap" href="#src.gui_manager.GUIManager.replay_sequence_from_pcap">replay_sequence_from_pcap</a></code></li>
+<li><code><a title="src.gui_manager.GUIManager.run" href="#src.gui_manager.GUIManager.run">run</a></code></li>
+<li><code><a title="src.gui_manager.GUIManager.sniff" href="#src.gui_manager.GUIManager.sniff">sniff</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.gui_manager.HorizontalBoxes" href="#src.gui_manager.HorizontalBoxes">HorizontalBoxes</a></code></h4>
+<ul class="">
+<li><code><a title="src.gui_manager.HorizontalBoxes.open_box" href="#src.gui_manager.HorizontalBoxes.open_box">open_box</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.gui_manager.MenuButton" href="#src.gui_manager.MenuButton">MenuButton</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.gui_manager.SubMenu" href="#src.gui_manager.SubMenu">SubMenu</a></code></h4>
+<ul class="">
+<li><code><a title="src.gui_manager.SubMenu.open_menu" href="#src.gui_manager.SubMenu.open_menu">open_menu</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

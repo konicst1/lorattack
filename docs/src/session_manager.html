@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>src.session_manager API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.session_manager</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+import json
+from enum import Enum, auto
+from typing import Dict, Any
+from src.command_handler import CommandHandler
+
+
+class SessionParams(Enum):
+    AppKey = auto()
+    NwkKey = auto()
+    JoinRequest_DevEUI = auto()
+    JoinRequest_AppEUI = auto()
+    JoinRequest_JoinEUI = auto()
+    JoinRequest_DevNonce = auto()
+    JoinAccept_AppNonce = auto()
+    JoinAccept_JoinNonce = auto()
+    JoinAccept_NetID = auto()
+    JoinAccept_DevAddr = auto()
+    AppSKey = auto()
+    NwkSKey = auto()
+    NwkSEncKey = auto()
+    SNwkSIntKey = auto()
+    FNwkSIntKey = auto()
+
+
+class SessionManager(CommandHandler):
+    def __init__(self):
+        &#34;&#34;&#34;Initializes the SessionManager instance.
+        Creates the sessions directory if it doesn&#39;t exist.
+        &#34;&#34;&#34;
+        self.sessions_dir = &#39;session/data&#39;
+        self.current_session_file = &#39;session/current_session&#39;
+        if not os.path.exists(self.sessions_dir):
+            os.makedirs(self.sessions_dir)
+
+    def get_current_session_name(self):
+        &#34;&#34;&#34;Retrieves the name of the currently active session.
+
+        Loads the current session data and returns the session name.
+
+        Returns:
+          str: The name of the currently active session, or None if no session is active.
+        &#34;&#34;&#34;
+        name, data = self.load_current_session()
+        return name
+
+    def create_session(self, session_name: str):
+        &#34;&#34;&#34;Creates a new LoRaWAN session with the specified name.
+
+        Initializes a new session directory with a data.json file to store session parameters.
+
+        Args:
+          session_name (str): The name to assign to the new session.
+        &#34;&#34;&#34;
+        session_data = {param.name: None for param in SessionParams}
+        session_dir = os.path.join(self.sessions_dir, session_name)
+        if not os.path.exists(session_dir):
+            os.makedirs(session_dir)
+        with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;w&#39;) as f:
+            json.dump(session_data, f, indent=4)
+        with open(self.current_session_file, &#39;w&#39;) as f:
+            f.write(session_name)
+
+    def activate_session(self, name):
+        &#34;&#34;&#34;Activates the specified session as the current session.
+
+        Updates the current_session_file to reflect the newly active session.
+
+        Args:
+          name (str): The name of the session to activate.
+        &#34;&#34;&#34;
+        with open(self.current_session_file, &#39;w&#39;) as f:
+            f.write(name)
+
+    def load_current_session(self):
+        &#34;&#34;&#34;Loads data from the currently active session.
+
+        Reads the session name and data from the corresponding files.
+
+        Returns:
+          tuple: A tuple containing the session name (str) and a dictionary of session data.
+        &#34;&#34;&#34;
+        with open(self.current_session_file, &#39;r&#39;) as f:
+            current_session_name = f.read().strip()
+        session_dir = os.path.join(self.sessions_dir, current_session_name)
+        with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;r&#39;) as f:
+            session_data_str = json.load(f)
+        session_data = {SessionParams[k]: v for k, v in session_data_str.items()}
+        return current_session_name, session_data
+
+    def update_session_value(self, param: SessionParams, value: Any):
+        &#34;&#34;&#34;Updates the specified session parameter with the provided value.
+
+        Loads the current session data, updates the specified parameter, and saves the data back to the session file.
+
+        Args:
+          param (SessionParams): The session parameter to update.
+          value (Any): The new value to assign to the parameter.
+        &#34;&#34;&#34;
+        name, session_data = self.load_current_session()
+        session_data[param] = value
+        self.save_session_data(session_data)
+
+    def get_session_value(self, param: SessionParams):
+        &#34;&#34;&#34;Retrieves the value of the specified session parameter.
+
+        Loads the current session data and returns the value associated with the given parameter. If the parameter is not set, it returns None.
+
+        Args:
+          param (SessionParams): The session parameter to retrieve the value for.
+
+        Returns:
+          Any: The value of the parameter in the current session, or None if the parameter is not set.
+        &#34;&#34;&#34;
+        _, session_data = self.load_current_session()
+        return session_data.get(param, None)
+
+    def save_session_data(self, session_data):
+        &#34;&#34;&#34;Saves the provided session data to the current session file.
+
+        Serializes the session data dictionary to JSON format and writes it to the data.json file in the current session directory.
+
+        Args:
+          session_data (dict): A dictionary containing the session parameters and their values.
+        &#34;&#34;&#34;
+        session_data_str = {k.name: v for k, v in session_data.items()}
+        with open(self.current_session_file, &#39;r&#39;) as f:
+            current_session_name = f.read().strip()
+        session_dir = os.path.join(self.sessions_dir, current_session_name)
+        with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;w&#39;) as f:
+            json.dump(session_data_str, f, indent=4)
+
+    def manage_sequence_file(self):
+        &#34;&#34;&#34;Opens the sequence file for editing in the default text editor.
+
+        If the sequence file doesn&#39;t exist, it creates an empty file.
+
+        Raises:
+          FileNotFoundError: If the default text editor cannot be found.
+        &#34;&#34;&#34;
+        current_session_name, _ = self.load_current_session()
+        sequence_file_path = os.path.join(self.sessions_dir, current_session_name, &#39;sequence&#39;)
+        if not os.path.exists(sequence_file_path):
+            with open(sequence_file_path, &#39;w&#39;) as f:
+                f.write(&#39;&#39;)
+        command = [&#39;gedit&#39;, sequence_file_path]
+        self.execute_command(command)
+
+    def read_sequence_file(self):
+        &#34;&#34;&#34;Reads the contents of the sequence file for the current session.
+
+         Attempts to parse the contents of the sequence file as comma-separated integers.
+
+         Returns:
+           list[int]: A list of integers parsed from the sequence file, or an empty list if the file is missing or contains invalid data.
+
+         Raises:
+           FileNotFoundError: If the sequence file is not found.
+           ValueError: If the sequence file contains non-integer values.
+         &#34;&#34;&#34;
+        current_session_name, _ = self.load_current_session()
+        sequence_file_path = os.path.join(self.sessions_dir, current_session_name, &#39;sequence&#39;)
+
+        try:
+            with open(sequence_file_path, &#39;r&#39;) as file:
+                contents = file.read().strip()
+                # Split the string by commas and convert each part to an integer
+                return [int(num) for num in contents.split(&#39;,&#39;) if num.strip().isdigit()]
+        except FileNotFoundError:
+            print(f&#34;No sequence file found in the session directory: {sequence_file_path}&#34;)
+            return []
+        except ValueError:
+            print(&#34;Error processing the sequence file. Ensure the file contains only integers separated by commas.&#34;)
+            return []
+
+    def list_sessions(self):
+        &#34;&#34;&#34;Returns a list of available session names.
+
+        Scans the sessions directory and returns a list of subdirectory names, which represent the available sessions.
+
+        Returns:
+          list[str]: A list of session names (subdirectory names within the sessions_dir).
+        &#34;&#34;&#34;
+        return [d for d in os.listdir(self.sessions_dir) if os.path.isdir(os.path.join(self.sessions_dir, d))]
+
+    def list_pcap_files(self):
+        &#34;&#34;&#34;Returns a list of PCAP files in the current session directory.
+
+        Retrieves the name of the current session and searches for files with the .pcap extension (excluding &#39;wireshark&#39; prefixed files).
+
+        Returns:
+          list[str]: A list of PCAP file names found in the current session directory, or an empty list if no PCAP files are found.
+        &#34;&#34;&#34;
+        _, session_data = self.load_current_session()
+        current_session_name, _ = self.load_current_session()
+        session_dir = os.path.join(self.sessions_dir, current_session_name)
+        pcap_files = [f for f in os.listdir(session_dir) if f.endswith(&#39;.pcap&#39;) and not f.startswith(&#39;wireshark&#39;)]
+        return pcap_files
+
+
+if __name__ == &#34;__main__&#34;:
+    sm = SessionManager()
+    s = sm.list_sessions()
+    sm.create_session(&#39;1131&#39;)
+    sm.update_session_value(SessionParams.JoinAccept_NetID, &#39;bleeeee&#39;)
+    print(s)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.session_manager.SessionManager"><code class="flex name class">
+<span>class <span class="ident">SessionManager</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base class for handling command execution.</p>
+<p>This class provides a basic mechanism to execute external commands using the <code>subprocess</code> module.</p>
+<p>Initializes the SessionManager instance.
+Creates the sessions directory if it doesn't exist.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SessionManager(CommandHandler):
+    def __init__(self):
+        &#34;&#34;&#34;Initializes the SessionManager instance.
+        Creates the sessions directory if it doesn&#39;t exist.
+        &#34;&#34;&#34;
+        self.sessions_dir = &#39;session/data&#39;
+        self.current_session_file = &#39;session/current_session&#39;
+        if not os.path.exists(self.sessions_dir):
+            os.makedirs(self.sessions_dir)
+
+    def get_current_session_name(self):
+        &#34;&#34;&#34;Retrieves the name of the currently active session.
+
+        Loads the current session data and returns the session name.
+
+        Returns:
+          str: The name of the currently active session, or None if no session is active.
+        &#34;&#34;&#34;
+        name, data = self.load_current_session()
+        return name
+
+    def create_session(self, session_name: str):
+        &#34;&#34;&#34;Creates a new LoRaWAN session with the specified name.
+
+        Initializes a new session directory with a data.json file to store session parameters.
+
+        Args:
+          session_name (str): The name to assign to the new session.
+        &#34;&#34;&#34;
+        session_data = {param.name: None for param in SessionParams}
+        session_dir = os.path.join(self.sessions_dir, session_name)
+        if not os.path.exists(session_dir):
+            os.makedirs(session_dir)
+        with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;w&#39;) as f:
+            json.dump(session_data, f, indent=4)
+        with open(self.current_session_file, &#39;w&#39;) as f:
+            f.write(session_name)
+
+    def activate_session(self, name):
+        &#34;&#34;&#34;Activates the specified session as the current session.
+
+        Updates the current_session_file to reflect the newly active session.
+
+        Args:
+          name (str): The name of the session to activate.
+        &#34;&#34;&#34;
+        with open(self.current_session_file, &#39;w&#39;) as f:
+            f.write(name)
+
+    def load_current_session(self):
+        &#34;&#34;&#34;Loads data from the currently active session.
+
+        Reads the session name and data from the corresponding files.
+
+        Returns:
+          tuple: A tuple containing the session name (str) and a dictionary of session data.
+        &#34;&#34;&#34;
+        with open(self.current_session_file, &#39;r&#39;) as f:
+            current_session_name = f.read().strip()
+        session_dir = os.path.join(self.sessions_dir, current_session_name)
+        with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;r&#39;) as f:
+            session_data_str = json.load(f)
+        session_data = {SessionParams[k]: v for k, v in session_data_str.items()}
+        return current_session_name, session_data
+
+    def update_session_value(self, param: SessionParams, value: Any):
+        &#34;&#34;&#34;Updates the specified session parameter with the provided value.
+
+        Loads the current session data, updates the specified parameter, and saves the data back to the session file.
+
+        Args:
+          param (SessionParams): The session parameter to update.
+          value (Any): The new value to assign to the parameter.
+        &#34;&#34;&#34;
+        name, session_data = self.load_current_session()
+        session_data[param] = value
+        self.save_session_data(session_data)
+
+    def get_session_value(self, param: SessionParams):
+        &#34;&#34;&#34;Retrieves the value of the specified session parameter.
+
+        Loads the current session data and returns the value associated with the given parameter. If the parameter is not set, it returns None.
+
+        Args:
+          param (SessionParams): The session parameter to retrieve the value for.
+
+        Returns:
+          Any: The value of the parameter in the current session, or None if the parameter is not set.
+        &#34;&#34;&#34;
+        _, session_data = self.load_current_session()
+        return session_data.get(param, None)
+
+    def save_session_data(self, session_data):
+        &#34;&#34;&#34;Saves the provided session data to the current session file.
+
+        Serializes the session data dictionary to JSON format and writes it to the data.json file in the current session directory.
+
+        Args:
+          session_data (dict): A dictionary containing the session parameters and their values.
+        &#34;&#34;&#34;
+        session_data_str = {k.name: v for k, v in session_data.items()}
+        with open(self.current_session_file, &#39;r&#39;) as f:
+            current_session_name = f.read().strip()
+        session_dir = os.path.join(self.sessions_dir, current_session_name)
+        with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;w&#39;) as f:
+            json.dump(session_data_str, f, indent=4)
+
+    def manage_sequence_file(self):
+        &#34;&#34;&#34;Opens the sequence file for editing in the default text editor.
+
+        If the sequence file doesn&#39;t exist, it creates an empty file.
+
+        Raises:
+          FileNotFoundError: If the default text editor cannot be found.
+        &#34;&#34;&#34;
+        current_session_name, _ = self.load_current_session()
+        sequence_file_path = os.path.join(self.sessions_dir, current_session_name, &#39;sequence&#39;)
+        if not os.path.exists(sequence_file_path):
+            with open(sequence_file_path, &#39;w&#39;) as f:
+                f.write(&#39;&#39;)
+        command = [&#39;gedit&#39;, sequence_file_path]
+        self.execute_command(command)
+
+    def read_sequence_file(self):
+        &#34;&#34;&#34;Reads the contents of the sequence file for the current session.
+
+         Attempts to parse the contents of the sequence file as comma-separated integers.
+
+         Returns:
+           list[int]: A list of integers parsed from the sequence file, or an empty list if the file is missing or contains invalid data.
+
+         Raises:
+           FileNotFoundError: If the sequence file is not found.
+           ValueError: If the sequence file contains non-integer values.
+         &#34;&#34;&#34;
+        current_session_name, _ = self.load_current_session()
+        sequence_file_path = os.path.join(self.sessions_dir, current_session_name, &#39;sequence&#39;)
+
+        try:
+            with open(sequence_file_path, &#39;r&#39;) as file:
+                contents = file.read().strip()
+                # Split the string by commas and convert each part to an integer
+                return [int(num) for num in contents.split(&#39;,&#39;) if num.strip().isdigit()]
+        except FileNotFoundError:
+            print(f&#34;No sequence file found in the session directory: {sequence_file_path}&#34;)
+            return []
+        except ValueError:
+            print(&#34;Error processing the sequence file. Ensure the file contains only integers separated by commas.&#34;)
+            return []
+
+    def list_sessions(self):
+        &#34;&#34;&#34;Returns a list of available session names.
+
+        Scans the sessions directory and returns a list of subdirectory names, which represent the available sessions.
+
+        Returns:
+          list[str]: A list of session names (subdirectory names within the sessions_dir).
+        &#34;&#34;&#34;
+        return [d for d in os.listdir(self.sessions_dir) if os.path.isdir(os.path.join(self.sessions_dir, d))]
+
+    def list_pcap_files(self):
+        &#34;&#34;&#34;Returns a list of PCAP files in the current session directory.
+
+        Retrieves the name of the current session and searches for files with the .pcap extension (excluding &#39;wireshark&#39; prefixed files).
+
+        Returns:
+          list[str]: A list of PCAP file names found in the current session directory, or an empty list if no PCAP files are found.
+        &#34;&#34;&#34;
+        _, session_data = self.load_current_session()
+        current_session_name, _ = self.load_current_session()
+        session_dir = os.path.join(self.sessions_dir, current_session_name)
+        pcap_files = [f for f in os.listdir(session_dir) if f.endswith(&#39;.pcap&#39;) and not f.startswith(&#39;wireshark&#39;)]
+        return pcap_files</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.command_handler.CommandHandler" href="command_handler.html#src.command_handler.CommandHandler">CommandHandler</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="src.session_manager.SessionManager.activate_session"><code class="name flex">
+<span>def <span class="ident">activate_session</span></span>(<span>self, name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Activates the specified session as the current session.</p>
+<p>Updates the current_session_file to reflect the newly active session.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the session to activate.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate_session(self, name):
+    &#34;&#34;&#34;Activates the specified session as the current session.
+
+    Updates the current_session_file to reflect the newly active session.
+
+    Args:
+      name (str): The name of the session to activate.
+    &#34;&#34;&#34;
+    with open(self.current_session_file, &#39;w&#39;) as f:
+        f.write(name)</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.create_session"><code class="name flex">
+<span>def <span class="ident">create_session</span></span>(<span>self, session_name: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a new LoRaWAN session with the specified name.</p>
+<p>Initializes a new session directory with a data.json file to store session parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>session_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name to assign to the new session.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_session(self, session_name: str):
+    &#34;&#34;&#34;Creates a new LoRaWAN session with the specified name.
+
+    Initializes a new session directory with a data.json file to store session parameters.
+
+    Args:
+      session_name (str): The name to assign to the new session.
+    &#34;&#34;&#34;
+    session_data = {param.name: None for param in SessionParams}
+    session_dir = os.path.join(self.sessions_dir, session_name)
+    if not os.path.exists(session_dir):
+        os.makedirs(session_dir)
+    with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;w&#39;) as f:
+        json.dump(session_data, f, indent=4)
+    with open(self.current_session_file, &#39;w&#39;) as f:
+        f.write(session_name)</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.get_current_session_name"><code class="name flex">
+<span>def <span class="ident">get_current_session_name</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the name of the currently active session.</p>
+<p>Loads the current session data and returns the session name.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>The name of the currently active session, or None if no session is active.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_current_session_name(self):
+    &#34;&#34;&#34;Retrieves the name of the currently active session.
+
+    Loads the current session data and returns the session name.
+
+    Returns:
+      str: The name of the currently active session, or None if no session is active.
+    &#34;&#34;&#34;
+    name, data = self.load_current_session()
+    return name</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.get_session_value"><code class="name flex">
+<span>def <span class="ident">get_session_value</span></span>(<span>self, param: <a title="src.session_manager.SessionParams" href="#src.session_manager.SessionParams">SessionParams</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the value of the specified session parameter.</p>
+<p>Loads the current session data and returns the value associated with the given parameter. If the parameter is not set, it returns None.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>param</code></strong> :&ensp;<code><a title="src.session_manager.SessionParams" href="#src.session_manager.SessionParams">SessionParams</a></code></dt>
+<dd>The session parameter to retrieve the value for.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Any</code></dt>
+<dd>The value of the parameter in the current session, or None if the parameter is not set.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_session_value(self, param: SessionParams):
+    &#34;&#34;&#34;Retrieves the value of the specified session parameter.
+
+    Loads the current session data and returns the value associated with the given parameter. If the parameter is not set, it returns None.
+
+    Args:
+      param (SessionParams): The session parameter to retrieve the value for.
+
+    Returns:
+      Any: The value of the parameter in the current session, or None if the parameter is not set.
+    &#34;&#34;&#34;
+    _, session_data = self.load_current_session()
+    return session_data.get(param, None)</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.list_pcap_files"><code class="name flex">
+<span>def <span class="ident">list_pcap_files</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a list of PCAP files in the current session directory.</p>
+<p>Retrieves the name of the current session and searches for files with the .pcap extension (excluding 'wireshark' prefixed files).</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[str]</code></dt>
+<dd>A list of PCAP file names found in the current session directory, or an empty list if no PCAP files are found.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_pcap_files(self):
+    &#34;&#34;&#34;Returns a list of PCAP files in the current session directory.
+
+    Retrieves the name of the current session and searches for files with the .pcap extension (excluding &#39;wireshark&#39; prefixed files).
+
+    Returns:
+      list[str]: A list of PCAP file names found in the current session directory, or an empty list if no PCAP files are found.
+    &#34;&#34;&#34;
+    _, session_data = self.load_current_session()
+    current_session_name, _ = self.load_current_session()
+    session_dir = os.path.join(self.sessions_dir, current_session_name)
+    pcap_files = [f for f in os.listdir(session_dir) if f.endswith(&#39;.pcap&#39;) and not f.startswith(&#39;wireshark&#39;)]
+    return pcap_files</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.list_sessions"><code class="name flex">
+<span>def <span class="ident">list_sessions</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a list of available session names.</p>
+<p>Scans the sessions directory and returns a list of subdirectory names, which represent the available sessions.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[str]</code></dt>
+<dd>A list of session names (subdirectory names within the sessions_dir).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_sessions(self):
+    &#34;&#34;&#34;Returns a list of available session names.
+
+    Scans the sessions directory and returns a list of subdirectory names, which represent the available sessions.
+
+    Returns:
+      list[str]: A list of session names (subdirectory names within the sessions_dir).
+    &#34;&#34;&#34;
+    return [d for d in os.listdir(self.sessions_dir) if os.path.isdir(os.path.join(self.sessions_dir, d))]</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.load_current_session"><code class="name flex">
+<span>def <span class="ident">load_current_session</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Loads data from the currently active session.</p>
+<p>Reads the session name and data from the corresponding files.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>A tuple containing the session name (str) and a dictionary of session data.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_current_session(self):
+    &#34;&#34;&#34;Loads data from the currently active session.
+
+    Reads the session name and data from the corresponding files.
+
+    Returns:
+      tuple: A tuple containing the session name (str) and a dictionary of session data.
+    &#34;&#34;&#34;
+    with open(self.current_session_file, &#39;r&#39;) as f:
+        current_session_name = f.read().strip()
+    session_dir = os.path.join(self.sessions_dir, current_session_name)
+    with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;r&#39;) as f:
+        session_data_str = json.load(f)
+    session_data = {SessionParams[k]: v for k, v in session_data_str.items()}
+    return current_session_name, session_data</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.manage_sequence_file"><code class="name flex">
+<span>def <span class="ident">manage_sequence_file</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Opens the sequence file for editing in the default text editor.</p>
+<p>If the sequence file doesn't exist, it creates an empty file.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>FileNotFoundError</code></dt>
+<dd>If the default text editor cannot be found.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def manage_sequence_file(self):
+    &#34;&#34;&#34;Opens the sequence file for editing in the default text editor.
+
+    If the sequence file doesn&#39;t exist, it creates an empty file.
+
+    Raises:
+      FileNotFoundError: If the default text editor cannot be found.
+    &#34;&#34;&#34;
+    current_session_name, _ = self.load_current_session()
+    sequence_file_path = os.path.join(self.sessions_dir, current_session_name, &#39;sequence&#39;)
+    if not os.path.exists(sequence_file_path):
+        with open(sequence_file_path, &#39;w&#39;) as f:
+            f.write(&#39;&#39;)
+    command = [&#39;gedit&#39;, sequence_file_path]
+    self.execute_command(command)</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.read_sequence_file"><code class="name flex">
+<span>def <span class="ident">read_sequence_file</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reads the contents of the sequence file for the current session.</p>
+<p>Attempts to parse the contents of the sequence file as comma-separated integers.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[int]</code></dt>
+<dd>A list of integers parsed from the sequence file, or an empty list if the file is missing or contains invalid data.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>FileNotFoundError</code></dt>
+<dd>If the sequence file is not found.</dd>
+<dt><code>ValueError</code></dt>
+<dd>If the sequence file contains non-integer values.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_sequence_file(self):
+    &#34;&#34;&#34;Reads the contents of the sequence file for the current session.
+
+     Attempts to parse the contents of the sequence file as comma-separated integers.
+
+     Returns:
+       list[int]: A list of integers parsed from the sequence file, or an empty list if the file is missing or contains invalid data.
+
+     Raises:
+       FileNotFoundError: If the sequence file is not found.
+       ValueError: If the sequence file contains non-integer values.
+     &#34;&#34;&#34;
+    current_session_name, _ = self.load_current_session()
+    sequence_file_path = os.path.join(self.sessions_dir, current_session_name, &#39;sequence&#39;)
+
+    try:
+        with open(sequence_file_path, &#39;r&#39;) as file:
+            contents = file.read().strip()
+            # Split the string by commas and convert each part to an integer
+            return [int(num) for num in contents.split(&#39;,&#39;) if num.strip().isdigit()]
+    except FileNotFoundError:
+        print(f&#34;No sequence file found in the session directory: {sequence_file_path}&#34;)
+        return []
+    except ValueError:
+        print(&#34;Error processing the sequence file. Ensure the file contains only integers separated by commas.&#34;)
+        return []</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.save_session_data"><code class="name flex">
+<span>def <span class="ident">save_session_data</span></span>(<span>self, session_data)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Saves the provided session data to the current session file.</p>
+<p>Serializes the session data dictionary to JSON format and writes it to the data.json file in the current session directory.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>session_data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary containing the session parameters and their values.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_session_data(self, session_data):
+    &#34;&#34;&#34;Saves the provided session data to the current session file.
+
+    Serializes the session data dictionary to JSON format and writes it to the data.json file in the current session directory.
+
+    Args:
+      session_data (dict): A dictionary containing the session parameters and their values.
+    &#34;&#34;&#34;
+    session_data_str = {k.name: v for k, v in session_data.items()}
+    with open(self.current_session_file, &#39;r&#39;) as f:
+        current_session_name = f.read().strip()
+    session_dir = os.path.join(self.sessions_dir, current_session_name)
+    with open(os.path.join(session_dir, &#39;data.json&#39;), &#39;w&#39;) as f:
+        json.dump(session_data_str, f, indent=4)</code></pre>
+</details>
+</dd>
+<dt id="src.session_manager.SessionManager.update_session_value"><code class="name flex">
+<span>def <span class="ident">update_session_value</span></span>(<span>self, param: <a title="src.session_manager.SessionParams" href="#src.session_manager.SessionParams">SessionParams</a>, value: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Updates the specified session parameter with the provided value.</p>
+<p>Loads the current session data, updates the specified parameter, and saves the data back to the session file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>param</code></strong> :&ensp;<code><a title="src.session_manager.SessionParams" href="#src.session_manager.SessionParams">SessionParams</a></code></dt>
+<dd>The session parameter to update.</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code>Any</code></dt>
+<dd>The new value to assign to the parameter.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_session_value(self, param: SessionParams, value: Any):
+    &#34;&#34;&#34;Updates the specified session parameter with the provided value.
+
+    Loads the current session data, updates the specified parameter, and saves the data back to the session file.
+
+    Args:
+      param (SessionParams): The session parameter to update.
+      value (Any): The new value to assign to the parameter.
+    &#34;&#34;&#34;
+    name, session_data = self.load_current_session()
+    session_data[param] = value
+    self.save_session_data(session_data)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.command_handler.CommandHandler" href="command_handler.html#src.command_handler.CommandHandler">CommandHandler</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.command_handler.CommandHandler.execute_command" href="command_handler.html#src.command_handler.CommandHandler.execute_command">execute_command</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.session_manager.SessionParams"><code class="flex name class">
+<span>class <span class="ident">SessionParams</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An enumeration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SessionParams(Enum):
+    AppKey = auto()
+    NwkKey = auto()
+    JoinRequest_DevEUI = auto()
+    JoinRequest_AppEUI = auto()
+    JoinRequest_JoinEUI = auto()
+    JoinRequest_DevNonce = auto()
+    JoinAccept_AppNonce = auto()
+    JoinAccept_JoinNonce = auto()
+    JoinAccept_NetID = auto()
+    JoinAccept_DevAddr = auto()
+    AppSKey = auto()
+    NwkSKey = auto()
+    NwkSEncKey = auto()
+    SNwkSIntKey = auto()
+    FNwkSIntKey = auto()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="src.session_manager.SessionParams.AppKey"><code class="name">var <span class="ident">AppKey</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.AppSKey"><code class="name">var <span class="ident">AppSKey</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.FNwkSIntKey"><code class="name">var <span class="ident">FNwkSIntKey</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.JoinAccept_AppNonce"><code class="name">var <span class="ident">JoinAccept_AppNonce</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.JoinAccept_DevAddr"><code class="name">var <span class="ident">JoinAccept_DevAddr</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.JoinAccept_JoinNonce"><code class="name">var <span class="ident">JoinAccept_JoinNonce</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.JoinAccept_NetID"><code class="name">var <span class="ident">JoinAccept_NetID</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.JoinRequest_AppEUI"><code class="name">var <span class="ident">JoinRequest_AppEUI</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.JoinRequest_DevEUI"><code class="name">var <span class="ident">JoinRequest_DevEUI</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.JoinRequest_DevNonce"><code class="name">var <span class="ident">JoinRequest_DevNonce</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.JoinRequest_JoinEUI"><code class="name">var <span class="ident">JoinRequest_JoinEUI</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.NwkKey"><code class="name">var <span class="ident">NwkKey</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.NwkSEncKey"><code class="name">var <span class="ident">NwkSEncKey</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.NwkSKey"><code class="name">var <span class="ident">NwkSKey</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="src.session_manager.SessionParams.SNwkSIntKey"><code class="name">var <span class="ident">SNwkSIntKey</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.session_manager.SessionManager" href="#src.session_manager.SessionManager">SessionManager</a></code></h4>
+<ul class="">
+<li><code><a title="src.session_manager.SessionManager.activate_session" href="#src.session_manager.SessionManager.activate_session">activate_session</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.create_session" href="#src.session_manager.SessionManager.create_session">create_session</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.get_current_session_name" href="#src.session_manager.SessionManager.get_current_session_name">get_current_session_name</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.get_session_value" href="#src.session_manager.SessionManager.get_session_value">get_session_value</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.list_pcap_files" href="#src.session_manager.SessionManager.list_pcap_files">list_pcap_files</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.list_sessions" href="#src.session_manager.SessionManager.list_sessions">list_sessions</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.load_current_session" href="#src.session_manager.SessionManager.load_current_session">load_current_session</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.manage_sequence_file" href="#src.session_manager.SessionManager.manage_sequence_file">manage_sequence_file</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.read_sequence_file" href="#src.session_manager.SessionManager.read_sequence_file">read_sequence_file</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.save_session_data" href="#src.session_manager.SessionManager.save_session_data">save_session_data</a></code></li>
+<li><code><a title="src.session_manager.SessionManager.update_session_value" href="#src.session_manager.SessionManager.update_session_value">update_session_value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.session_manager.SessionParams" href="#src.session_manager.SessionParams">SessionParams</a></code></h4>
+<ul class="">
+<li><code><a title="src.session_manager.SessionParams.AppKey" href="#src.session_manager.SessionParams.AppKey">AppKey</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.AppSKey" href="#src.session_manager.SessionParams.AppSKey">AppSKey</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.FNwkSIntKey" href="#src.session_manager.SessionParams.FNwkSIntKey">FNwkSIntKey</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.JoinAccept_AppNonce" href="#src.session_manager.SessionParams.JoinAccept_AppNonce">JoinAccept_AppNonce</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.JoinAccept_DevAddr" href="#src.session_manager.SessionParams.JoinAccept_DevAddr">JoinAccept_DevAddr</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.JoinAccept_JoinNonce" href="#src.session_manager.SessionParams.JoinAccept_JoinNonce">JoinAccept_JoinNonce</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.JoinAccept_NetID" href="#src.session_manager.SessionParams.JoinAccept_NetID">JoinAccept_NetID</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.JoinRequest_AppEUI" href="#src.session_manager.SessionParams.JoinRequest_AppEUI">JoinRequest_AppEUI</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.JoinRequest_DevEUI" href="#src.session_manager.SessionParams.JoinRequest_DevEUI">JoinRequest_DevEUI</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.JoinRequest_DevNonce" href="#src.session_manager.SessionParams.JoinRequest_DevNonce">JoinRequest_DevNonce</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.JoinRequest_JoinEUI" href="#src.session_manager.SessionParams.JoinRequest_JoinEUI">JoinRequest_JoinEUI</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.NwkKey" href="#src.session_manager.SessionParams.NwkKey">NwkKey</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.NwkSEncKey" href="#src.session_manager.SessionParams.NwkSEncKey">NwkSEncKey</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.NwkSKey" href="#src.session_manager.SessionParams.NwkSKey">NwkSKey</a></code></li>
+<li><code><a title="src.session_manager.SessionParams.SNwkSIntKey" href="#src.session_manager.SessionParams.SNwkSIntKey">SNwkSIntKey</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
