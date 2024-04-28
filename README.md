@@ -159,10 +159,6 @@ The Analyzer submenu displays a list of PCAP files associated with your active s
 
 * **Configure transmitter:** Refer to the Sniffer Configuration section for details on configuring transmitter parameters used during replay attacks (e.g., frequency, gain).
 
-This revised section avoids code snippets and focuses on user-friendly descriptions of the attack functionalities. It also clarifies the purpose of each attack option. 
-### Exit
-
-This option exits the LoRAttack tool.
 
 ### Attack simulation guidelines
 TBD
