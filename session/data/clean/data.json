@@ -1,0 +1,17 @@
+{
+"AppKey": null,
+"NwkKey": null,
+"JoinRequest_DevEUI": null,
+"JoinRequest_AppEUI": null,
+"JoinRequest_JoinEUI": null,
+"JoinRequest_DevNonce": null,
+"JoinAccept_AppNonce": null,
+"JoinAccept_JoinNonce": null,
+"JoinAccept_NetID": null,
+"JoinAccept_DevAddr": null,
+"AppSKey": null,
+"NwkSKey": null,
+"NwkSEncKey": null,
+"SNwkSIntKey": null,
+"FNwkSIntKey": null
+}
