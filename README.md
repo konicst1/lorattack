@@ -1,3 +1,7 @@
+## Disclaimer
+The tool is still actively under construction. The sniffer utility should be working well, so feel free to test it out. Please note, that the transmission features require more testing as I currently do not own a LoRaWAN gateway.
+
+If you encounter any trouble, feel free to raise an issue.
 ## LoRAttack
 
 This repository provides a toolkit for assessing LoRaWAN network security. Here's what it offers:
