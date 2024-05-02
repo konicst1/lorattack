@@ -69,6 +69,11 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+```bash
+sudo apt-get update
+sudo apt-get install bittwist
+```
+
 Also install gr-lora libraries from:
 
 * https://github.com/rpp0/gr-lora 
