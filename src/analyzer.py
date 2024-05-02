@@ -234,8 +234,8 @@ class Analyzer(CommandHandler):
 
         Returns: None
 
-        self.stop_event.set()
         """
+        self.stop_event.set()
 
 
 if __name__ == "__main__":
