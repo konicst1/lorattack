@@ -170,5 +170,6 @@ The Analyzer submenu displays a list of PCAP files associated with your active s
 
 
 ### Attack simulation guidelines
-TBD
+For penetration testing guidelines - refer to section **LoRaWAN Security Testing
+Framework** in my thesis here: https://dspace.cvut.cz/handle/10467/115255
 
